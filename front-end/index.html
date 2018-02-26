@@ -1,16 +1,375 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Basic Bootstrap Template</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<html lang="en" >
 
+<head>
+  <meta charset="UTF-8">
+  <title>Netflix style carousel</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/index/style.css">
+
+  
 </head>
+
 <body>
-    <h1>Hello, world!</h1>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search">
+    </div>
+    </form>
+    <button type="button" class="btn btn-default navbar-btn navbar-right">Share a History</button>
+    </div>
+  </nav>
+
+  <div id="wrapper">  
+  
+  <div class="title text-left h1">Category One</div>
+ 
+  <div class="module-section clearfix">
+    <!-- <button class="btn arrow-guides fa-chevron-left"></button> -->
+  <div id="controlL" class="left-controls" role="button" aria-label="See Previous Modules" onmouseover="leftControl('#content')">
+    <b class="fa fa-chevron-left fa-chevron-left-extra" aria-hidden="true" ></b>
+  </div> 
+
+   <ul id="content">
+     
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+   </ul>    
+   <div id="controlR" class="right-controls" role="button" aria-label="See Previous Modules" onmouseover="rightControl('#content')">
+    <b class="fa fa-chevron-right fa-chevron-right-extra" aria-hidden="true" ></b>
+  </div>
+  </div><!--end of module-section-->  
+
+<!-- <button class="btn arrow-guides-right fa-chevron-right"></button> -->
+</div>
+
+ <div id="wrapper">  
+ 
+  <div class="title text-left h1">Category Two</div>
+ 
+  <div class="module-section clearfix">  
+   <div id="controlL" class="left-controls" role="button" aria-label="See Previous Modules" onmouseover="leftControl('#content2')" >
+    <b class="fa fa-chevron-left fa-chevron-left-extra" aria-hidden="true" ></b>
+  </div>   
+   <ul id="content2">
+     
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+    <li class="card effect1">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+     <li class="card">
+      <div class="inside-top">
+        <img src="http://placehold.it/150x100">
+        <p class="text-light bg-dark">Title</p>
+      </div>
+    </li>
+   </ul>
+    
+   <div id="controlR" class="right-controls" role="button" aria-label="See Previous Modules" onmouseover="rightControl('#content2')">
+    <b class="fa fa-chevron-right fa-chevron-right-extra" aria-hidden="true" ></b>
+  </div>
+    
+  </div><!--end of module-section-->
+  
+
+<!-- <button class="btn arrow-guides-right fa-chevron-right"></button> -->
+  
+  
+  
+</div>
+
+  <script src='https://use.fontawesome.com/76758773b6.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+  
+
+    <script  src="js/index/index.js"></script>
+
+
+
+
 </body>
+
 </html>
