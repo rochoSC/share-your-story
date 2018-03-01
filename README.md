@@ -11,14 +11,16 @@
 ### Installation
 
 - Install mongodb (For cloud9 https://community.c9.io/t/setting-up-mongodb/1717)
-- Install pymongo for python (For cloud9 python dependencies https://community.c9.io/t/installing-python-packages/1611)
+- (Deprecated, not anymore) Install pymongo for python (For cloud9 python dependencies https://community.c9.io/t/installing-python-packages/1611)
 - Install Flask for python
+- Install Flask-PyMongo for python https://flask-pymongo.readthedocs.io/en/latest/
+- install flask restfull framework sudo easy_install flask-restful
 - Changed apache2 config file to point to our front-end folder: sudo nano /etc/apache2/sites-enabled/001-cloud9.conf
 
 ### Run
 
 - Run mongo: First, make sure you are at the workspace main directory and that you can see the executable mongod. Then execute ./mongod in a terminal
-- Run the back-end: ./run.sh
+- Run the back-end: python api.py (When changes are made to the file, the server restasts automatically)
 - Run the front-end: sudo service apache2 start (if not already running)
 
 ### Notes
