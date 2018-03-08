@@ -5,7 +5,7 @@ from myapi.common.util import *
 class Login(Resource):
     def post(self):
         login = parse_body(request.data) 
-        user = mongo.db.users.find_one({"username":login["username"], "password":login["password"]}) #update data
+        user = mongo.db.users.find_one({"username":login["username"].lower(), "password":login["password"]}) #update data
         if user == None:
             abort(404, message="The username does not exist or the password is incorrect")
         return {"message": "Logged in"}, 200
@@ -13,6 +13,7 @@ class Login(Resource):
 class Register(Resource):
     def post(self):
         register = parse_body(request.data)
+        register["username"] = register["username"].lower()
         try:
             res = mongo.db.users.insert(register)
         except mongoerr.DuplicateKeyError:
