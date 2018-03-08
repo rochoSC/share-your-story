@@ -1,8 +1,6 @@
 from myapi import api #defined in __init__.py
 from myapi import app #defined in __init__.py
 from myapi import mongo #defined in __init__.py
-from myapi.resources.foo import Foo
-from myapi.resources.bar import Bar
 from myapi.resources.todo import Todo,TodoList
 
 api.add_resource(TodoList, '/todos')
