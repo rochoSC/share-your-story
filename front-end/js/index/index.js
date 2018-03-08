@@ -23,6 +23,38 @@ function leftControl(content){
 
 }
 
+$(document).ready(function() {
+
+  //This file must be added on every js that uses ajax calls to our API server
+  $.getScript("js/constants.js", function() {
+     console.log("Constants file loaded")
+  });
+
+  $("#loginForm").submit(function(){
+
+    //TODO: If successful, store username as a session on local storage for future requests
+    $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: CONSTANTS.API_BASE_URL + "user/login" ,
+    data: JSON.stringify({
+      username: $("#loginForm #username").val(),
+      password: $("#loginForm #password").val()
+    }),
+    dataType: 'json',
+    success: function(msg){
+      $("#loginForm #loginErrorMsg").hide();
+      localStorage.setItem("usernameSession",$("#loginForm #username").val().toLowerCase());
+      window.location = "dashboard"
+    },
+    error: function(msg){
+      $("#loginForm #loginErrorMsg").text(msg.responseJSON.message);
+      $("#loginForm #loginErrorMsg").fadeIn();
+    }
+    });
+    return false;
+  });
+});
 /*jQuery(document).ready(function ($) {
 
 
