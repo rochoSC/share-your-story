@@ -5,8 +5,6 @@ from myapi.resources.foo import Foo
 from myapi.resources.bar import Bar
 from myapi.resources.todo import Todo,TodoList
 
-api.add_resource(Foo, '/Foo', '/Foo/<string:id>')
-api.add_resource(Bar, '/Bar', '/Bar/<string:id>')
 api.add_resource(TodoList, '/todos')
 api.add_resource(Todo, '/todos/<todo_id>')
 
