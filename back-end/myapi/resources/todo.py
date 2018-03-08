@@ -37,5 +37,8 @@ class TodoList(Resource):
 
     def post(self):
         todo = json.loads(request.data)
-        res = mongo.db.todos.insert(todo) 
+        try:
+            res = mongo.db.todos.insert(todo)
+        except PyMongo.errors.DuplicateKeyError:
+            abort(400, message="Username already exists")
         return {"message": "Inserted with ID: " + str(res)}, 201
