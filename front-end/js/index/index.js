@@ -2,10 +2,10 @@
 
 function rightControl(content){
   //  $(control).mouseover(function() {
-      event.preventDefault();      
-      //if(parseInt($(content).css('marginRight'))<0){                 
-        $(content).animate({        
-          marginLeft: "-=400px"        
+      event.preventDefault();
+      //if(parseInt($(content).css('marginRight'))<0){
+        $(content).animate({
+          marginLeft: "-=400px"
         }, "fast");
       //}
    //});
@@ -14,7 +14,7 @@ function rightControl(content){
 function leftControl(content){
  //$('#controlL').mouseover(function() {
       event.preventDefault();
-      if(parseInt($(content).css('marginLeft'))<0){ 
+      if(parseInt($(content).css('marginLeft'))<0){
        $(content).animate({
           marginLeft: "+=400px"
         }, "fast");
@@ -25,17 +25,17 @@ function leftControl(content){
 
 /*jQuery(document).ready(function ($) {
 
-  
-  
+
+
 	var slideCount = $('.module-section ul li').length;
 	var slideWidth = $('.module-section ul li').width();
 	var slideHeight = $('.module-section ul li').height();
 	var sliderUlWidth = slideCount * slideWidth;
-	
+
 	$('.module-section').css({ width: slideWidth, height: slideHeight });
-	
+
 	$('.module-section ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
-	
+
     $('.module-section ul li:last-child').prependTo('.module-section ul');
 
     function moveLeft() {
@@ -64,7 +64,7 @@ function leftControl(content){
         moveRight();
     });
 
-});    
+});
 
 
 
