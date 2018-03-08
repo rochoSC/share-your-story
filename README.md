@@ -22,6 +22,11 @@
 - Run mongo: First, make sure you are at the workspace main directory and that you can see the executable mongod. Then execute ./mongod in a terminal
 - Run the back-end: python api.py (When changes are made to the file, the server restasts automatically)
 - Run the front-end: sudo service apache2 start (if not already running)
+- 
+
+When the machine is suthed down by cloud9. Both mongodb and apache2 servers might en up having an inconsistent state preventing us from furter server run. 
+To solve it on mongo: Run mongo as ./mongod --repair
+To solve it on apache2: Remove the file sudo rm /home/ubuntu/lib/apache2/run/apache2.pid
 
 ### Notes
 
