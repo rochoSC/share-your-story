@@ -1,6 +1,6 @@
 body{
   background:#fff;
-  
+
 }
 
 html {
@@ -25,7 +25,7 @@ html {
 button:focus {outline:0 !important;}
 
 .left-controls{
-  
+
   position:absolute;
   top:40%;
   left:0;
@@ -50,7 +50,7 @@ button:focus {outline:0 !important;}
 .fa-chevron-left-extra
 {
   position:relative;
-  align-self:center;  
+  align-self:center;
   height:auto;
   /*top:250px;*/
   transform-origin: 55% 50%;
@@ -94,7 +94,7 @@ button:focus {outline:0 !important;}
 .fa-chevron-right-extra
 {
   position:relative;
-  align-self:center;  
+  align-self:center;
   height:auto;
   /*top:250px;*/
  transform-origin: 55% 50%;
@@ -118,13 +118,13 @@ button:focus {outline:0 !important;}
 }
 
 .module-section{
-  max-width: 100%;  
+  max-width: 100%;
   overflow: hidden;
   overflow-x:scroll;
-  overflow-y: hidden; // hide vertical  
+  overflow-y: hidden; // hide vertical
   border-left:1px solid #fff;
   border-right:1px solid #fff;
-  
+
 }
 
 ul{
@@ -192,7 +192,7 @@ color:#fff;
   -moz-box-shadow: 0px 1px 5px 0px #676767;
   -webkit-box-shadow: 0px 1px 5px 0px #676767;
   box-shadow: 0px 1px 5px 0px #676767;
-  
+
 }
 
 .card:hover{
@@ -200,13 +200,13 @@ color:#fff;
   transform: scale(1);
   visibility:visible;
   transition: all .2s ease-in-out;
-  transform: scale(1.1); 
+  transform: scale(1.1);
   z-index:100;
   position:relative;
   transition-timing-function:cubic-bezier(0.5, 0, 0.1, 1);
   transition-duration:400ms;
- 
-  
+
+
 }
 
  .inside-top{

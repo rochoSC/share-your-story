@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Share your story</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/nav.css">
 
@@ -12,6 +12,10 @@
 <body>
     <div class="container-fluid">
       <div class="row">
+        <div style="margin:20px">
+          <a href="#" class="btn btn-default" id="usernameSession" data-toggle="modal" data-target="#confirmLogOut">Session</a>
+        </div>
+
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
@@ -164,6 +168,29 @@
           </div>
         </main>
       </div>
+    </div>
+
+    <!-- Log out confirmation modal -->
+    <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                  <h4 class="modal-title">Log out</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are you sure you want to Log Out?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Log Out</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="../js/jquery-3.3.1.min.js"></script>
