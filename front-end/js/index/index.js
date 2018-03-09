@@ -24,7 +24,19 @@ function leftControl(content){
 }
 
 $(document).ready(function() {
-  //TODO: Add behavior when localStorage for usernameSession is not empty
+
+  var usernameSession = localStorage.getItem("usernameSession");
+
+  if(usernameSession){
+    $("#usernameSession").show();
+    $("#goToDashboard").show();
+    $("#shareStory").hide();
+  }else{
+    $("#usernameSession").hide();
+    $("#goToDashboard").hide();
+    $("#shareStory").show();
+  }
+
   //This file must be added on every js that uses ajax calls to our API server
   $.getScript("js/constants.js", function() {
      console.log("Constants file loaded")

@@ -4,18 +4,7 @@ $(document).ready(function() {
 		if(!usernameSession){
 			//Redirect to index since there is no session to work with
 			window.location = "/";
-		} else {
-			//Set the session for reference
-			$("#usernameSession").text(usernameSession);
 		}
-
-		$('#confirmLogOut').on('show.bs.modal', function(e) {
-			$(this).find('.btn-ok').click(function(){
-				localStorage.removeItem("usernameSession");
-				window.location = "/";
-			});
-			// $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-    });
 
 		$("#my_projects_nav").click(function() {
 

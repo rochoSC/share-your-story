@@ -22,9 +22,13 @@
     </form>
     <!-- Login Modal -->
     <!-- <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal">Share a History</button> -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-  Share a Story
-</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" id="shareStory">
+        Share a Story
+    </button>
+    <a href="/dashboard" class="btn btn-primary btn-lg active collapse" role="button" aria-pressed="true" id="goToDashboard">Dashboard</a>
+    <div class="collapse" style="margin:20px" id="usernameSession">
+      <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
+    </div>
     <!-- <div class="container navbar-btn navbar-right">
     	<div class="row">
     		<a class="btn btn-primary" data-toggle="modal" href="#myModal" >Login</a>
@@ -467,6 +471,29 @@
     </div>
   </div>
 
+
+  <!-- Log out confirmation modal -->
+  <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+
+              <div class="modal-header">
+
+                <h4 class="modal-title">Log out</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+
+              <div class="modal-body">
+                  <p>Are you sure you want to Log Out?</p>
+              </div>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <a class="btn btn-danger btn-ok">Log Out</a>
+              </div>
+          </div>
+      </div>
+  </div>
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
@@ -476,8 +503,9 @@
   <!-- <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script> -->
   <!-- <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> -->
 
-  <script  src="js/index/index.js"></script>
-  
+  <script src="js/util.js"></script>
+  <script src="js/index/index.js"></script>
+
 </body>
 
 </html>
