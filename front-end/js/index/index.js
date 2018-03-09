@@ -24,27 +24,28 @@ function leftControl(content){
 }
 
 $(document).ready(function() {
-
+  //TODO: Add behavior when localStorage for usernameSession is not empty
   //This file must be added on every js that uses ajax calls to our API server
   $.getScript("js/constants.js", function() {
      console.log("Constants file loaded")
   });
 
+  //Submit loggin info
   $("#loginForm").submit(function(){
 
-    //TODO: If successful, store username as a session on local storage for future requests
     $.ajax({
     type: "POST",
     contentType: "application/json",
     url: CONSTANTS.API_BASE_URL + "user/login" ,
     data: JSON.stringify({
-      username: $("#loginForm #username").val(),
-      password: $("#loginForm #password").val()
+      username: $("#loginForm #usernameL").val(),
+      password: $("#loginForm #passwordL").val()
     }),
     dataType: 'json',
     success: function(msg){
       $("#loginForm #loginErrorMsg").hide();
-      localStorage.setItem("usernameSession",$("#loginForm #username").val().toLowerCase());
+      //Storing on localStorage for future session references
+      localStorage.setItem("usernameSession",$("#loginForm #usernameL").val().toLowerCase());
       window.location = "dashboard"
     },
     error: function(msg){
@@ -53,6 +54,57 @@ $(document).ready(function() {
     }
     });
     return false;
+  });
+
+  $("#registerForm").submit(function(){
+
+    if ($("#passwordR").val().length < 6){
+      $("#registerForm #registerErrorMsg").text("Password too short");
+      $("#registerForm #registerErrorMsg").fadeIn();
+      return false;
+    }
+    if ($("#passwordR").val() !== $("#confirmPasswordR").val()){
+      $("#registerForm #registerErrorMsg").text("Passwords does not match");
+      $("#registerForm #registerErrorMsg").fadeIn();
+      return false;
+    }
+    $("#registerForm #registerErrorMsg").hide();
+
+    $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: CONSTANTS.API_BASE_URL + "user/register" ,
+    data: JSON.stringify({
+      username: $("#registerForm #usernameR").val().toLowerCase(),
+      password: $("#registerForm #passwordR").val(),
+      name: $("#registerForm #nameR").val(),
+      lastname: $("#registerForm #lastnameR").val()
+    }),
+    dataType: 'json',
+    success: function(msg){
+      $("#registerForm #registerErrorMsg").hide();
+      //Storing on localStorage for future session references
+      localStorage.setItem("usernameSession",$("#registerForm #usernameR").val().toLowerCase());
+      window.location = "dashboard"
+    },
+    error: function(msg){
+      $("#registerForm #registerErrorMsg").text(msg.responseJSON.message);
+      $("#registerForm #registerErrorMsg").fadeIn();
+    }
+    });
+    return false;
+  });
+
+  //Showing register view when clicked on create account
+  $("#createAccount").click(function(){
+    $("#loginView").hide();
+    $("#registerView").show();
+  });
+
+  //Showing login view when clicked on back to login button
+  $("#backToLogin").click(function(){
+    $("#registerView").hide();
+    $("#loginView").show();
   });
 });
 /*jQuery(document).ready(function ($) {

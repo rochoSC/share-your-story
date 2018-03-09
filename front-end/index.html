@@ -23,7 +23,7 @@
     <!-- Login Modal -->
     <!-- <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal">Share a History</button> -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-  Launch demo modal
+  Share a Story
 </button>
     <!-- <div class="container navbar-btn navbar-right">
     	<div class="row">
@@ -401,27 +401,66 @@
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">Login</h4>
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <div id="loginView">
+          <div class="modal-header">
+              <h4 class="modal-title">Login</h4>
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="well">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username" class="control-label">Username</label>
+                        <input type="text" class="form-control" id="usernameL" name="username" required title="Please enter your username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Password</label>
+                        <input type="password" class="form-control" id="passwordL" name="password" required title="Please enter your password" placeholder="Password">
+                    </div>
+                    <div id="loginErrorMsg" class="alert alert-danger collapse" role="alert">Login error</div>
+                    <button type="submit" class="btn btn-success btn-block">Login</button>
+                    <a href="#" class="btn btn-default btn-block" id="createAccount">Create an account</a>
+                </form>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <div class="well">
-              <form id="loginForm" novalidate="novalidate">
-                  <div class="form-group">
-                      <label for="username" class="control-label">Username</label>
-                      <input type="text" class="form-control" id="username" name="username" value="" required="" title="Please enter your username" placeholder="Username">
-                      <span class="help-block"></span>
-                  </div>
-                  <div class="form-group">
-                      <label for="password" class="control-label">Password</label>
-                      <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password" placeholder="Password">
-                      <span class="help-block"></span>
-                  </div>
-                  <div id="loginErrorMsg" class="alert alert-danger collapse" role="alert">Login error</div>
-                  <button type="submit" class="btn btn-success btn-block">Login</button>
-                  <a href="#" class="btn btn-default btn-block">Create an account</a>
-              </form>
+        <div id="registerView" class="collapse">
+          <div class="modal-header">
+              <h4 class="modal-title">Register</h4>
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="well">
+                <form id="registerForm" data-toggle="validator">
+                    <div class="form-group">
+                        <label for="name" class="control-label">Name</label>
+                        <input type="text" class="form-control" id="nameR" name="name" title="Please enter your name" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="control-label">Lastname</label>
+                        <input type="text" class="form-control" id="lastNameR" name="lastname" title="Please enter your lastname" placeholder="Lastname">
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="control-label">Username</label>
+                        <input type="text" class="form-control" id="usernameR" name="username" required title="Please enter your username" placeholder="Username">
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Password</label>
+                        <input type="password" class="form-control" id="passwordR" name="password" required title="Please enter your password" placeholder="Password">
+                        <span class="help-block">Min. 6 characteres</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPasswordR" name="passwordConfirm" required title="Confirm password" placeholder="Confirm Password" >
+                        <span class="help-block"></span>
+                    </div>
+
+                    <div id="registerErrorMsg" class="alert alert-danger collapse" role="alert">Register error</div>
+                    <button type="submit" class="btn btn-success btn-block">Register</button>
+                    <a href="#" class="btn btn-default" id="backToLogin">Back to Login</a>
+                </form>
+            </div>
           </div>
         </div>
       </div>
@@ -451,12 +490,12 @@
                             <form id="loginForm" method="POST" action="/login/" novalidate="novalidate">
                                 <div class="form-group">
                                     <label for="username" class="control-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" value="" required="" title="Please enter you username" placeholder="example@gmail.com">
+                                    <input type="text" class="form-control" id="username" name="username" required="" title="Please enter you username" placeholder="example@gmail.com">
                                     <span class="help-block"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="control-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password">
+                                    <input type="password" class="form-control" id="password" name="password" required="" title="Please enter your password">
                                     <span class="help-block"></span>
                                 </div>
                                 <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
