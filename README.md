@@ -34,5 +34,8 @@ To solve it on apache2: Remove the file sudo rm /home/ubuntu/lib/apache2/run/apa
 - For server and ports configuration https://docs.c9.io/docs/run-an-application (we only have open the ports 8080,8081,8082)
 - The public url: http://csce656-newmedia-rochosc.c9users.io/
 - Ports 8080 html, 8081 rest api
-- If running the front-end locally, it may be necessarily to use an HTTP server to avoid cross origin errors. To do so, simply place the project under an apache2, wamp, xampp, etc servers
- folder. Or, as a simpler way just locate in the front-end directory then run python SimpleHTTPServer, will run in localhost:8000
+- If running the front-end locally, it may be necessarily to use an HTTP server to avoid cross origin errors.
+  To do so, simply place the project under an apache2, wamp, xampp, etc servers folder.
+  Or, as a simpler way in terminal just cd to front-end directory then run
+  python -m SimpleHTTPServer 8000
+  will run in localhost:8000
