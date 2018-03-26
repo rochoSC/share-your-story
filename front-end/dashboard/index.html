@@ -12,6 +12,7 @@
 <body>
     <div class="container-fluid">
       <div class="row">
+        <!-- Session information -->
         <div style="margin:20px"  id="usernameSession">
           <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
         </div>
@@ -170,6 +171,8 @@
       </div>
     </div>
 
+    <!-- This has to always bee added to any html; Start -->
+
     <!-- Log out confirmation modal -->
     <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -193,9 +196,14 @@
         </div>
     </div>
 
+    <!-- Global JS -->
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/util.js"></script>
+
+    <!-- This has to always bee added to any html; End -->
+
+    <!-- Local JS -->
     <script src="js/nav.js"></script>
 </body>
 </html>
