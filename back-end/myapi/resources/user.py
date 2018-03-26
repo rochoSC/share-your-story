@@ -7,7 +7,7 @@ class Login(Resource):
         login = parse_body(request.data) 
         user = mongo.db.users.find_one({"username":login["username"].lower(), "password":login["password"]}) #update data
         if user == None:
-            abort(404, message="The username does not exist or the password is incorrect")
+            return {"message": "The username does not exist or the password is incorrect"}, 404
         return {"message": "Logged in"}, 200
 
 class Register(Resource):
@@ -17,6 +17,6 @@ class Register(Resource):
         try:
             res = mongo.db.users.insert(register)
         except mongoerr.DuplicateKeyError:
-            abort(400, message="Username already exists")    
+            return {"message": "Username already existst"}, 404
             
         return {"message": "Successfully logged in"}, 201
