@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fragment recording</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body>
+    <!-- Session information -->
+    <div style="margin:20px"  id="usernameSession">
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
+    </div>
+
+    <!-- This has to always bee added to any html; Start -->
+
+    <!-- Log out confirmation modal -->
+    <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                  <h4 class="modal-title">Log out</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are you sure you want to Log Out?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/util.js"></script>
+    <!-- This has to always bee added to any html; End -->
+
+    <!-- Local JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
