@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   //This file must be added on every js that uses ajax calls to our API server
   $.getScript("../js/constants.js", function() {
      console.log("Constants file loaded")
@@ -12,8 +11,12 @@ $(document).ready(function() {
   var video = document.querySelector('#video_recording');//For some reason does not work with jquery selectors
   var webcamstream;
   var mediaRecorder;
-  var recordedBlobs;
-
+  var recordedBlobs = [];
+  var recordedTime = 0;
+  var recordingElapsedTime = 0;
+  var recordingTimeOut;
+  var recordingTimer;
+  var isRecording = false;
   //Verify we can actually access the video
   if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
     // Good to go!
@@ -29,12 +32,31 @@ $(document).ready(function() {
     }
 
     //Obtaining the video streaming instance
-    navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+    function loadStreaming(){
+      navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+    }
+    loadStreaming();
 
     $("#rec_button").click(function(){
-      console.log('Clicked');
+      console.log('Clicked rec');
       startRecording();
     });
+
+    $("#stop_button").click(function(){
+      console.log('Clicked stop');
+      clearTimeout(recordingTimeOut);
+      clearInterval(recordingTimer);
+      stopRecording();
+    });
+
+    $("#play_button").click(function(){
+      console.log('Clicked play');
+      if (recordedBlobs.length > 0){
+        var superBuffer = new Blob(recordedBlobs, {type: "video/webm"});
+        video.srcObject = null;
+        video.src = window.URL.createObjectURL(superBuffer);
+      }
+    }).prop('disabled', true);
 
     $("#submit_fragment_button").click(function(){
       console.log('Submitting');
@@ -57,15 +79,18 @@ $(document).ready(function() {
             console.log(msg.responseJSON.message);
           }
         });
-    });
+    }).prop('disabled', true);
 
     //Starts the recording of the video. Inspired in https://github.com/webrtc/samples/blob/gh-pages/src/content/getusermedia/record/js/main.js
     function startRecording() {
 
       //TODO: Control the timer
         //$("#video_recording_progress").attr("aria-valuenow", control).css('width', control+'%')
-
+      recordingElapsedTime = 0;
+      $("#video_recording_progress").attr("aria-valuenow", 0).css('width', 0+'%')
+      loadStreaming();
       $("#video_recording_gif").show();
+      $("#rec_button").prop('disabled', true);
       recordedBlobs = [];
       var options = {mimeType: 'video/webm;codecs=vp9'};
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
@@ -92,20 +117,34 @@ $(document).ready(function() {
       mediaRecorder.ondataavailable = handleDataAvailable;
       mediaRecorder.start(10); // collect 10ms of data
       console.log('MediaRecorder started', mediaRecorder);
-
+      isRecording = true;
       //Will collect data for only the maximum amount of predefined seconds
-      //TODO: Handle pause and stop from buttons
-      setTimeout(stopRecording, CONSTANTS.VIDEO_FRAME_MAX_SECS*1000);
-
+      // 100 milliseconds allows our timer to stop properly
+      recordingTimeOut = setTimeout(stopRecording, CONSTANTS.VIDEO_FRAME_MAX_SECS*1000+100);
+      recordingTimer = setInterval(function(){
+        recordingElapsedTime++;
+        percentaje = (100*recordingElapsedTime)/CONSTANTS.VIDEO_FRAME_MAX_SECS;
+        $("#video_recording_progress").attr("aria-valuenow", percentaje).css('width', percentaje+'%')
+      }, 1000);
     }
 
     //Stops the recording from the media recorder
     function stopRecording() {
-      $("#video_recording_gif").hide();
-      console.log("Stopped recording");
-      mediaRecorder.stop();
+      if (isRecording){
+        clearInterval(recordingTimer);
+        $("#video_recording_gif").hide();
+        console.log("Stopped recording");
+        mediaRecorder.stop();
+        isRecording = false;
+        $("#rec_button").prop('disabled', false);
+        $("#play_button").prop('disabled', false);
+        console.log(recordedBlobs.length);
+        console.log(recordingElapsedTime);
+      }
+
+      // $("#submit_fragment_button").prop('disabled', true);
       //console.log('Recorded Blobs: ', recordedBlobs);
-      postVideoToServer(recordedBlobs);
+      //postVideoToServer(recordedBlobs);
     }
 
     //This function stores the blobs that will after converted into a video
