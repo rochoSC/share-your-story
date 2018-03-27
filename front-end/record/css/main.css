@@ -1,0 +1,15 @@
+#video_recording_gif {
+  position:absolute;
+  z-index:300000;
+  text-align:center;
+}
+
+#video_recording {
+  width: 90%;
+  height: 90%;
+}
+
+#video_recording_progress {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
