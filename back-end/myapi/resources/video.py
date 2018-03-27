@@ -25,12 +25,6 @@ class VideoList(Resource):
 
 class VideoUpload(Resource):
 
-    def get(self):
-        print "============================= from get"
-        folder_path = os.path.join("uploads", "videos")
-        print folder_path
-        return send_from_directory(folder_path, "test.webm")
-
     #Saves the video in our file system
     def post(self):
 
