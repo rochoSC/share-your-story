@@ -17,6 +17,16 @@
 - Install flask restfull framework sudo easy_install flask-restful
 - Install Cross origin libraries sudo easy_install -U flask-cors
 - Changed apache2 config file to point to our front-end folder: sudo nano /etc/apache2/sites-enabled/001-cloud9.conf
+- Also added this configuration information to apache2 config file to serve static files for uploaded videos
+
+== IMPORTANT CONFIGURATION FOR STATIC FILES ==
+
+Alias /images "/var/www/img/"  
+<Directory "/var/www/img">  
+AllowOverride None  
+Order allow,deny  
+Allow from all  
+</Directory>
 
 ### Run
 
