@@ -1,142 +1,111 @@
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Moti Vate</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <!-- Global JS -->
+  <script src="../js/util.js"></script>
+  <script src="js/index/index.js"></script>
 
-
-  <!-- <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'> -->
-  <link rel="stylesheet" href="css/index/style.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
 </head>
 
 <body>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-    <form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search">
-    </div>
-    </form>
-    <!-- Login Modal -->
-    <!-- <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal">Share a History</button> -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" id="shareStory">
-        Share a Story
-    </button>
-    <a href="/dashboard" class="btn btn-primary btn-lg active collapse" role="button" aria-pressed="true" id="goToDashboard">Dashboard</a>
-    <div class="collapse" style="margin:20px" id="usernameSession">
-      <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
-    </div>
-    <!-- <div class="container navbar-btn navbar-right">
-    	<div class="row">
-    		<a class="btn btn-primary" data-toggle="modal" href="#myModal" >Login</a>
-
-            <div class="modal hide" id="myModal">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">x</button>
-                <h3>Login to MyWebsite.com</h3>
-              </div>
-              <div class="modal-body">
-                <form method="post" action='' name="login_form">
-                  <p><input type="text" class="span3" name="eid" id="email" placeholder="Email"></p>
-                  <p><input type="password" class="span3" name="passwd" placeholder="Password"></p>
-                  <p><button type="submit" class="btn btn-primary">Sign in</button>
-                    <a href="#">Forgot Password?</a>
-                  </p>
-                </form>
-              </div>
-              <div class="modal-footer">
-                New To MyWebsite.com?
-                <a href="#" class="btn btn-primary">Register</a>
-              </div>
-            </div>
-    	</div>
-    </div> -->
+      <form class="navbar-form navbar-btn navbar-left " role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button">Go!</button>
+            </span>
+          </div>
+      </form>
+      <!-- Login Modal -->
+      <!-- <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal">Share a History</button> -->
+      <button type="button" class="btn btn-primary navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal" id="shareStory">Share a Story</button>
+      <a href="/dashboard" class="btn btn-primary btn-lg active collapse" role="button" aria-pressed="true" id="goToDashboard">Dashboard</a>
+      <div class="collapse" style="margin:20px" id="usernameSession">
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
+      </div>
     </div>
   </nav>
-
-
-
-
-  <div id="wrapper"></div><!--end of module-section-->
-
-
-<!-- <button class="btn arrow-guides-right fa-chevron-right"></button> -->
-
-
-
-
-
-
-<!-- Include the above in your HEAD tag ---------->
-
-
-
-
-
+  <div id="wrapper" ></div> <!-- Adding the carrusell here -->
+  <!--end of module-section-->
+  <!-- Include the above in your HEAD tag ---------->
   <!-- Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div id="loginView">
           <div class="modal-header">
-              <h4 class="modal-title">Login</h4>
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Login</h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
           </div>
           <div class="modal-body">
             <div class="well">
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="username" class="control-label">Username</label>
-                        <input type="text" class="form-control" id="usernameL" name="username" required title="Please enter your username" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Password</label>
-                        <input type="password" class="form-control" id="passwordL" name="password" required title="Please enter your password" placeholder="Password">
-                    </div>
-                    <div id="loginErrorMsg" class="alert alert-danger collapse" role="alert">Login error</div>
-                    <button type="submit" class="btn btn-success btn-block">Login</button>
-                    <a href="#" class="btn btn-default btn-block" id="createAccount">Create an account</a>
-                </form>
+              <form id="loginForm">
+                <div class="form-group">
+                  <label for="username" class="control-label">Username</label>
+                  <input type="text" class="form-control" id="usernameL" name="username" required title="Please enter your username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <label for="password" class="control-label">Password</label>
+                  <input type="password" class="form-control" id="passwordL" name="password" required title="Please enter your password" placeholder="Password">
+                </div>
+                <div id="loginErrorMsg" class="alert alert-danger collapse" role="alert">Login error</div>
+                <button type="submit" class="btn btn-success btn-block">Login</button>
+                <a href="#" class="btn btn-default btn-block" id="createAccount">Create an account</a>
+              </form>
             </div>
           </div>
         </div>
         <div id="registerView" class="collapse">
           <div class="modal-header">
-              <h4 class="modal-title">Register</h4>
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Register</h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
           </div>
           <div class="modal-body">
             <div class="well">
-                <form id="registerForm" data-toggle="validator">
-                    <div class="form-group">
-                        <label for="name" class="control-label">Name</label>
-                        <input type="text" class="form-control" id="nameR" name="name" title="Please enter your name" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="control-label">Lastname</label>
-                        <input type="text" class="form-control" id="lastNameR" name="lastname" title="Please enter your lastname" placeholder="Lastname">
-                    </div>
-                    <div class="form-group">
-                        <label for="username" class="control-label">Username</label>
-                        <input type="text" class="form-control" id="usernameR" name="username" required title="Please enter your username" placeholder="Username">
-                        <span class="help-block"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Password</label>
-                        <input type="password" class="form-control" id="passwordR" name="password" required title="Please enter your password" placeholder="Password">
-                        <span class="help-block">Min. 6 characteres</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPasswordR" name="passwordConfirm" required title="Confirm password" placeholder="Confirm Password" >
-                        <span class="help-block"></span>
-                    </div>
+              <form id="registerForm" data-toggle="validator">
+                <div class="form-group">
+                  <label for="name" class="control-label">Name</label>
+                  <input type="text" class="form-control" id="nameR" name="name" title="Please enter your name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <label for="lastname" class="control-label">Lastname</label>
+                  <input type="text" class="form-control" id="lastNameR" name="lastname" title="Please enter your lastname" placeholder="Lastname">
+                </div>
+                <div class="form-group">
+                  <label for="username" class="control-label">Username</label>
+                  <input type="text" class="form-control" id="usernameR" name="username" required title="Please enter your username" placeholder="Username">
+                  <span class="help-block"></span>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="control-label">Password</label>
+                  <input type="password" class="form-control" id="passwordR" name="password" required title="Please enter your password" placeholder="Password">
+                  <span class="help-block">Min. 6 characteres</span>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="control-label">Confirm Password</label>
+                  <input type="password" class="form-control" id="confirmPasswordR" name="passwordConfirm" required title="Confirm password" placeholder="Confirm Password">
+                  <span class="help-block"></span>
+                </div>
 
-                    <div id="registerErrorMsg" class="alert alert-danger collapse" role="alert">Register error</div>
-                    <button type="submit" class="btn btn-success btn-block">Register</button>
-                    <a href="#" class="btn btn-default" id="backToLogin">Back to Login</a>
-                </form>
+                <div id="registerErrorMsg" class="alert alert-danger collapse" role="alert">Register error</div>
+                <button type="submit" class="btn btn-success btn-block">Register</button>
+                <a href="#" class="btn btn-default" id="backToLogin">Back to Login</a>
+              </form>
             </div>
           </div>
         </div>
@@ -148,43 +117,58 @@
 
   <!-- Log out confirmation modal -->
   <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-              <div class="modal-header">
+        <div class="modal-header">
 
-                <h4 class="modal-title">Log out</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              </div>
+          <h4 class="modal-title">Log out</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
 
-              <div class="modal-body">
-                  <p>Are you sure you want to Log Out?</p>
-              </div>
+        <div class="modal-body">
+          <p>Are you sure you want to Log Out?</p>
+        </div>
 
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-danger btn-ok">Log Out</a>
-              </div>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-danger btn-ok">Log Out</a>
+        </div>
       </div>
+    </div>
   </div>
+  
+  
 
+ <!--Watching a video -->
+  <!-- Log out confirmation modal -->
+  <div class="modal fade" id="VideoWatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-  <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
-  <!-- <script src='https://use.fontawesome.com/76758773b6.js'></script> -->
-  <!-- <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script> -->
-  <!-- <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h1 class="modal-title" id="videoTitle"></h1>
+        </div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/util.js"></script>
+        <div class="modal-body">
+          <iframe width="560" height="315" id="videoToWatch" frameborder="0" allowfullscreen>
+          </iframe>
+          <p id="titleDescription"></p>
+        </div>
+
+        <!--<div class="modal-footer">-->
+        <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+        <!--  <a class="btn btn-danger btn-ok">Log Out</a>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
 
   <!-- This has to always bee added to any html; End -->
 
   <!-- Local JS -->
-  <script src="js/index/index.js"></script>
+ 
 
 </body>
 
