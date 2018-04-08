@@ -21,7 +21,22 @@ class VideoList(Resource):
                 listVideos[video["category"]]=[]
             listVideos[video["category"]].append(video)
         return listVideos
-
+        
+class VideoSearch(Resource):
+    def get(self):
+        
+        search = request.args.get("keys") 
+        print search
+        term = ".*"+search+".*" ##cuidar con mas palabras
+        print term
+        res = to_json(mongo.db.videos.find({"published":True , "title": {"$regex": term}}).sort([("category",1)]))
+        listVideos = {}
+        for video in res:
+            if not(video["category"] in listVideos):
+                listVideos[video["category"]]=[]
+            listVideos[video["category"]].append(video)
+        print "Algo",listVideos
+        return listVideos
 
 class VideoUpload(Resource):
 

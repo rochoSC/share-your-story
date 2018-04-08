@@ -1,3 +1,49 @@
+function fillPage(msg) {
+  
+  jQuery.each(msg, function(index1, categories) {
+    var $contenido = $("<div>").attr("id","subWrapper");
+    var $idControl = "#content".concat(index1)
+    //console.log($idControl)
+    var $category = $("<div>") //creating the slide for category
+    var $categoryTitle = $("<div class='title text-left h1'>".concat(index1).concat("</div>"));
+    $category.append($categoryTitle);
+    var $myCarrusel = $("<div>").attr("id", $idControl).addClass("carousel slide");
+    var $innercarousel = $("<div>").addClass("carousel-inner");
+    var $classItem = "item active";
+    for (v = 0; v < categories.length;) {
+      var $item = $("<div>").addClass($classItem);
+      var $classItem = "item";
+      //hay un for aqui que es modulo 4
+      var $row = $("<div>").addClass("row");
+      //hay un for que va hasta el 4
+      for (i = 0; i < 4 && i < categories.length; i++) {
+        var $video = $("<div>").addClass("col-xs-3");
+        var $link = $("<a>").attr("href", "#?id=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target", "#VideoWatch").attr("data-toggle", "modal").data("src", categories[v]["url"]);
+        $link.data("title", categories[v]["title"]).data("description", categories[v]["description"])
+        var $thumbnail = $("<img>").attr("src", categories[v]["thumbnail"]); //add thumbnailroute
+        $link.append($thumbnail);
+        $video.append($link);
+        $row.append($video);
+        v++;
+      } //termina el for que va hasta el 4
+      //termina el for 
+      $item.append($row)
+    }
+    var $leftControl = $("<a>").addClass("left carousel-control").attr("href", $idControl).attr("data-slide", "prev").text("‹")
+    var $rightControl = $("<a>").addClass("right carousel-control").attr("href", $idControl).attr("data-slide", "next").text("›")
+    $innercarousel.append($item);
+    $myCarrusel.append($innercarousel);
+    $myCarrusel.append($leftControl);
+    $myCarrusel.append($rightControl);
+    $category.append($myCarrusel);
+    $contenido.append($category);
+    $("#wrapper").append($contenido);
+
+
+  }); //every category first for
+}
+
+
 
 $(document).ready(function() {
   
@@ -22,63 +68,44 @@ $(document).ready(function() {
     //Load the list videos
    $.ajax({
       type: "GET",
-      contentType: "application/json",
+      //contentType: "application/json",
       url: CONSTANTS.API_BASE_URL + "videos",
       data: JSON.stringify({}),
-      dataType: 'json',
+      //dataType: 'json',
       success: function(msg) {
-        //fill the categories
-        jQuery.each(msg, function(index1, categories) {
-          
-          var $idControl = "#content".concat(index1)
-          //console.log($idControl)
-          var $category = $("<div>") //creating the slide for category
-          var $categoryTitle = $("<div class='title text-left h1'>".concat(index1).concat("</div>"));
-          $category.append($categoryTitle);
-          var $myCarrusel = $("<div>").attr("id",$idControl).addClass("carousel slide");
-          var $innercarousel = $("<div>").addClass("carousel-inner");
-          var $classItem = "item active";
-          for( v=0;v<categories.length;){
-            var $item = $("<div>").addClass($classItem);
-            var $classItem = "item";
-            //hay un for aqui que es modulo 4
-            var $row =$("<div>").addClass("row");
-            //hay un for que va hasta el 4
-            for(i=0; i<4&&i<categories.length ;i++ ){
-              var $video = $("<div>").addClass("col-xs-3");
-              var $link = $("<a>").attr("href","#?id=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target","#VideoWatch").attr("data-toggle","modal").data("src",categories[v]["url"]);
-              $link.data("title",categories[v]["title"]).data("description",categories[v]["description"])
-              var $thumbnail = $("<img>").attr("src",categories[v]["thumbnail"]); //add thumbnailroute
-              $link.append($thumbnail);
-              $video.append($link);
-              $row.append($video);
-              v++;
-            }//termina el for que va hasta el 4
-            //termina el for 
-            $item.append($row)
-          }
-          var $leftControl = $("<a>").addClass("left carousel-control").attr("href",$idControl).attr("data-slide","prev").text("‹")
-          var $rightControl = $("<a>").addClass("right carousel-control").attr("href",$idControl).attr("data-slide","next").text("›")
-          $innercarousel.append($item);
-          $myCarrusel.append($innercarousel);
-          $myCarrusel.append($leftControl);
-          $myCarrusel.append($rightControl);
-          $category.append($myCarrusel);
-          console.log($category[0])
-          $("#wrapper").append($category);
-          
-          
-        }); //every category first for
-        
+        fillPage(msg)
       },
-      error: function(msg) {
-        //something happened
-        //maybe show an alert of something like that.
-        alert("Something happened");
+      error: function(jqXHR, textStatus, errorThrown) {
+        printError(jqXHR, textStatus, errorThrown)
       }
     });
     
   });
+
+  $("#searchButton").click(function() {
+    console.log("On Click");
+    $("#subWrapper").remove();
+    //$("#subWrapper").remove();
+    $.ajax({
+      type: "GET",
+      //contentType: "application/json",
+      url: CONSTANTS.API_BASE_URL + "video/search?keys="+$("#searchText").val(),
+      data: JSON.stringify({
+        keys: $("#searchText").val()
+      }),
+      //dataType: 'json',
+      success: function(msg) {
+  
+        fillPage(msg)
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        printError(jqXHR, textStatus, errorThrown)
+      }
+    });
+  
+  
+  });
+
 
   //Submit loggin info
   $("#loginForm").submit(function() {
@@ -173,84 +200,8 @@ $(document).ready(function() {
 });
   
 });
-/*jQuery(document).ready(function ($) {
 
 
 
-	var slideCount = $('.module-section ul li').length;
-	var slideWidth = $('.module-section ul li').width();
-	var slideHeight = $('.module-section ul li').height();
-	var sliderUlWidth = slideCount * slideWidth;
-
-	$('.module-section').css({ width: slideWidth, height: slideHeight });
-
-	$('.module-section ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
-
-    $('.module-section ul li:last-child').prependTo('.module-section ul');
-
-    function moveLeft() {
-        $('.module-section ul').animate({
-            left: + slideWidth
-        }, 200, function () {
-            $('.module-section ul li:last-child').prependTo('.module-section ul');
-            $('.module-section ul').css('left', '');
-        });
-    };
-
-    function moveRight() {
-        $('.module-section ul').animate({
-            left: - slideWidth
-        }, 200, function () {
-            $('.module-section ul li:first-child').appendTo('.module-section ul');
-            $('.module-section ul').css('left', '');
-        });
-    };
-
-    $('.left-controls').click(function () {
-        moveLeft();
-    });
-
-    $('.right-controls').click(function () {
-        moveRight();
-    });
-
-});
 
 
-
-*/
-
-
-/*$(document).ready(function() {
-
-    $("#my_projects_nav").click(function() {
-
-      //Menu UI
-      $("#my_uploads_nav").removeClass("active");
-      $("#my_projects_nav").addClass("active");
-
-      //Menu content display
-      $("#my_projects_container").removeClass("d-none");
-      $("#my_uploads_container").addClass("d-none");
-    });
-
-    $("#my_uploads_nav").click(function() {
-      $("#my_projects_nav").removeClass("active");
-      $("#my_uploads_nav").addClass("active");
-
-      $("#my_uploads_container").removeClass("d-none");
-      $("#my_projects_container").addClass("d-none");
-    });
-
-    $("#add_video").click(function() {
-        var href = $(this).find("a").attr("href");
-        if(href) {
-            window.location = href;
-        }
-    });
-
-    $("#add_video").hover(function() {
-        $(this).css("cursor","pointer");
-    });
-
-});*/
