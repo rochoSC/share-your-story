@@ -17,6 +17,7 @@ $(document).ready(function() {
   var recordingTimeOut;
   var recordingTimer;
   var isRecording = false;
+  var isComplete = false;
   //Verify we can actually access the video
   if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
     // Good to go!
@@ -88,14 +89,32 @@ $(document).ready(function() {
     //Starts the recording of the video. Inspired in https://github.com/webrtc/samples/blob/gh-pages/src/content/getusermedia/record/js/main.js
     function startRecording() {
 
-      //TODO: Control the timer
-        //$("#video_recording_progress").attr("aria-valuenow", control).css('width', control+'%')
-      recordingElapsedTime = 0;
-      $("#video_recording_progress").attr("aria-valuenow", 0).css('width', 0+'%')
+      if(recordedBlobs.length>0 && isComplete){
+        //Video will be erased and you will have to record it again
+        var r = confirm("Are you sure you want to record the whole fragment again?");
+        if(r){
+          isComplete = false;
+          recordingElapsedTime = 0;
+          $("#video_recording_progress").attr("aria-valuenow", 0).css('width', 0+'%')
+          recordedBlobs = [];
+        }else{
+          return;
+        }
+
+      }
+      // else if(recordedBlobs.length>0 && !isComplete){
+      //   //Record from were it was left before
+      // }else{
+      //
+      // }
+
+
+      $("#fragment-complete").hide();
+
       loadStreaming();
       $("#video_recording_gif").show();
       $("#rec_button").prop('disabled', true);
-      recordedBlobs = [];
+
       var options = {mimeType: 'video/webm;codecs=vp9'};
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log(options.mimeType + ' is not Supported');
@@ -124,18 +143,32 @@ $(document).ready(function() {
       isRecording = true;
       //Will collect data for only the maximum amount of predefined seconds
       // 100 milliseconds allows our timer to stop properly
-      recordingTimeOut = setTimeout(stopRecording, CONSTANTS.VIDEO_FRAME_MAX_SECS*1000+100);
+      recordingTimeOut = setTimeout(stopRecording, (CONSTANTS.VIDEO_FRAME_MAX_SECS*1000+100)-recordingElapsedTime);
       recordingTimer = setInterval(function(){
-        recordingElapsedTime++;
-        percentaje = (100*recordingElapsedTime)/CONSTANTS.VIDEO_FRAME_MAX_SECS;
+        //console.log(getTimeLeft(recordingTimeOut));
+        recordingElapsedTime+=100;
+        percentaje = (100*recordingElapsedTime)/(CONSTANTS.VIDEO_FRAME_MAX_SECS*1000);
+        if(percentaje == 100){
+          isComplete = true;
+        }
         $("#video_recording_progress").attr("aria-valuenow", percentaje).css('width', percentaje+'%')
-      }, 1000);
+      }, 100);
     }
 
     //Stops the recording from the media recorder
     function stopRecording() {
       if (isRecording){
+        //TODO: Show message when successfully completed for recorder
+        //TODO: Change record to continue or something
+        if(isComplete){
+          //alert('Complete');
+          var marginTop = video.offsetHeight / 2 - 10;
+          $("#fragment-complete").css("margin-top", marginTop+"px");
+          $("#fragment-complete").show();
+        }
+        video.pause();
         clearInterval(recordingTimer);
+        clearTimeout(recordingTimeOut);
         $("#video_recording_gif").hide();
         console.log("Stopped recording");
         mediaRecorder.stop();
@@ -144,6 +177,8 @@ $(document).ready(function() {
         $("#play_button").prop('disabled', false);
         console.log(recordedBlobs.length);
         console.log(recordingElapsedTime);
+      }else{
+        //TODO: is playing but not recording. Just stop it
       }
 
       // $("#submit_fragment_button").prop('disabled', true);

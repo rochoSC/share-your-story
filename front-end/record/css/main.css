@@ -13,3 +13,13 @@
     -webkit-transition: none !important;
     transition: none !important;
 }
+
+#fragment-complete{
+  width: 100%;
+  position: absolute;
+  z-index: 300000;
+  text-align: center;
+  color: white;
+  font-size: 500%;
+
+}
