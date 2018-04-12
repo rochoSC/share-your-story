@@ -38,11 +38,14 @@ $(document).ready(function() {
     loadStreaming();
 
     $("#rec_button").click(function(){
+
+      video.muted = true;
       console.log('Clicked rec');
       startRecording();
     });
 
     $("#stop_button").click(function(){
+      video.muted = true;
       console.log('Clicked stop');
       clearTimeout(recordingTimeOut);
       clearInterval(recordingTimer);
@@ -55,6 +58,7 @@ $(document).ready(function() {
         var superBuffer = new Blob(recordedBlobs, {type: "video/webm"});
         video.srcObject = null;
         video.src = window.URL.createObjectURL(superBuffer);
+        video.muted = false;
       }
     }).prop('disabled', true);
 

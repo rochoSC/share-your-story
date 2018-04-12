@@ -71,7 +71,6 @@ $(document).ready(function() {
       type: "GET",
       //contentType: "application/json",
       url: CONSTANTS.API_BASE_URL + "videos",
-      data: JSON.stringify({}),
       //dataType: 'json',
       success: function(msg) {
         fillPage(msg)
