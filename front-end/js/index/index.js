@@ -1,5 +1,5 @@
 function fillPage(msg) {
-  
+
   jQuery.each(msg, function(index1, categories) {
     var $contenido = $("<div>").attr("id","subWrapper");
     var $idControl = "#content".concat(index1)
@@ -26,7 +26,7 @@ function fillPage(msg) {
         $row.append($video);
         v++;
       } //termina el for que va hasta el 4
-      //termina el for 
+      //termina el for
       $item.append($row)
     }
     var $leftControl = $("<a>").addClass("left carousel-control").attr("href", $idControl).attr("data-slide", "prev").text("‹")
@@ -46,8 +46,8 @@ function fillPage(msg) {
 
 
 $(document).ready(function() {
-  
-  
+
+
 
 
   var usernameSession = localStorage.getItem("usernameSession");
@@ -64,7 +64,8 @@ $(document).ready(function() {
   }
 
   //This file must be added on every js that uses ajax calls to our API server
-  $.getScript("js/constants.js", function() {console.log("Constants file loaded")
+  $.getScript("js/constants.js", function() {
+    console.log("Constants file loaded")
     //Load the list videos
    $.ajax({
       type: "GET",
@@ -79,7 +80,7 @@ $(document).ready(function() {
         printError(jqXHR, textStatus, errorThrown)
       }
     });
-    
+
   });
 
   $("#searchButton").click(function() {
@@ -95,15 +96,15 @@ $(document).ready(function() {
       }),
       //dataType: 'json',
       success: function(msg) {
-  
+
         fillPage(msg)
       },
       error: function(jqXHR, textStatus, errorThrown) {
         printError(jqXHR, textStatus, errorThrown)
       }
     });
-  
-  
+
+
   });
 
 
@@ -183,7 +184,7 @@ $(document).ready(function() {
     $("#registerView").hide();
     $("#loginView").show();
   });
-  
+
   $(document).on("click", ".thumbnail", function () {
      var myVideoURL = $(this).data('src');
      if (!myVideoURL.includes("embed")){
@@ -193,15 +194,10 @@ $(document).ready(function() {
      $(".modal-body #videoToWatch").attr( "src", myVideoURL);
      $("#videoTitle").text($(this).data('title'))
      $("#titleDescription").text($(this).data('description'))
-     
-     // As pointed out in comments, 
+
+     // As pointed out in comments,
      // it is superfluous to have to manually call the modal.
      // $('#addBookDialog').modal('show');
 });
-  
+
 });
-
-
-
-
-
