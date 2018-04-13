@@ -21,11 +21,12 @@
 
 == IMPORTANT CONFIGURATION FOR STATIC FILES ==
 
-Alias /images "/var/www/img/"  
-<Directory "/var/www/img">  
-AllowOverride None  
-Order allow,deny  
-Allow from all  
+</Directory>
+   Alias /uploads "/home/ubuntu/workspace/csce656_final_project/back-end/uploads"
+   <Directory "/home/ubuntu/workspace/csce656_final_project/back-end/uploads">
+   AllowOverride None
+   Order allow,deny
+   Allow from all
 </Directory>
 
 ### Run

@@ -105,8 +105,8 @@ $(document).ready(function() {
             contentType: false,
             success: function(msg){
               console.log(msg);
-              //alert(msg.message);
-              //window.location = "../edit?id="+videoId;
+              alert(msg.message);
+              window.location = "../edit?id="+videoId;
             },
             error: function(msg){
               console.log(msg);
@@ -209,8 +209,6 @@ $(document).ready(function() {
         isRecording = false;
         $("#rec_button").prop('disabled', false);
         $("#play_button").prop('disabled', false);
-        console.log(recordedBlobs.length);
-        console.log(recordingElapsedTime);
       }else{
         //TODO: is playing but not recording. Just stop it
       }
