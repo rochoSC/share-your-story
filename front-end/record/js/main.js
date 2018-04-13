@@ -4,6 +4,21 @@ $(document).ready(function() {
      console.log("Constants file loaded")
   });
 
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+  };
+
   var constraints = {
     audio: true,
     video: {width: {exact: 640}, height: {exact: 480}}
@@ -65,25 +80,41 @@ $(document).ready(function() {
 
     $("#submit_fragment_button").click(function(){
       console.log('Submitting');
-      var superBuffer = new Blob(recordedBlobs, {type: "video/webm"});
-      var fd = new FormData();
-      fd.append("file_name", "test.webm");
-      fd.append("file", superBuffer);
-      fd.append("video_id", "customid");
-      $.ajax({
-          type: "POST",
-          url: CONSTANTS.API_BASE_URL + "video/upload",
-          data: fd,
-          processData: false,
-          contentType: false,
-          success: function(msg){
-            console.log(msg);
-          },
-          error: function(msg){
-            console.log(msg);
-            console.log(msg.responseJSON.message);
-          }
-        });
+      var videoId = getUrlParameter("videoId");
+      var fragmentId = getUrlParameter("fragmentId");
+
+      var finalVideoFile = new Blob(recordedBlobs, {type: "video/webm"});
+
+      var canvas = document.createElement('canvas');
+      canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(function(videoThumbnailFile) {        // get content as JPEG blob
+        // here the image is a blob
+        var fd = new FormData();
+        fd.append("videoId", videoId);
+        fd.append("fragmentId", fragmentId);
+        fd.append("videoFile", finalVideoFile);
+        fd.append("thumbnailFile", videoThumbnailFile);
+        $.ajax({
+            type: "POST",
+            url: CONSTANTS.API_BASE_URL + "video/upload",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function(msg){
+              console.log(msg);
+              //alert(msg.message);
+              //window.location = "../edit?id="+videoId;
+            },
+            error: function(msg){
+              console.log(msg);
+              console.log(msg.responseJSON.message);
+            }
+          });
+      }, "image/png", 0.75);
+
     }).prop('disabled', true);
 
     //Starts the recording of the video. Inspired in https://github.com/webrtc/samples/blob/gh-pages/src/content/getusermedia/record/js/main.js
