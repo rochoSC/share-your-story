@@ -97,6 +97,7 @@ $(document).ready(function() {
           recordingElapsedTime = 0;
           $("#video_recording_progress").attr("aria-valuenow", 0).css('width', 0+'%')
           recordedBlobs = [];
+          $("#submit_fragment_button").prop('disabled', true);
         }else{
           return;
         }
@@ -165,6 +166,8 @@ $(document).ready(function() {
           var marginTop = video.offsetHeight / 2 - 10;
           $("#fragment-complete").css("margin-top", marginTop+"px");
           $("#fragment-complete").show();
+          $("#submit_fragment_button").prop('disabled', false);
+          console.log("Disabled");
         }
         video.pause();
         clearInterval(recordingTimer);
