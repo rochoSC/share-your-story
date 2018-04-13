@@ -78,11 +78,13 @@ class VideoUpload(Resource):
 
             video = mongo.db.videos.find_one({"videoId":int(video_id)})
             if video is not None:
-                #TODO: Receive thumbnail
-                #TODO: Set fragmentID (question), videoFragmentUrl, thumbnailUrl
+                #TODO: Delete fragmentId if already exists on video
+                print "========================================================="
+                print fragment_id
+                mongo.db.videos.update({"videoId":int(video_id)},{ "$pull": { "fragments": { "fragmentId": int(fragment_id) } } });
                 res = mongo.db.videos.update_one({"videoId":int(video_id)},{ "$push": { "fragments": {
-                    "fragmentId": int(fragment_id), "videoUrl": video_path, "thumbnailPath":thumbnail_path
-                } } })
+                    "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailPath":thumbnail_path.replace('\\', '/')
+                } } });
                 return {"message": "The file has been uploaded"}, 201
             else:
                 return {"message": "The associated video does not exist in DB"}, 404
