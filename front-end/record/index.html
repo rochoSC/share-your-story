@@ -20,18 +20,19 @@
         </div>
       </div>
       <div class="row">
-          <div class="col-6 border">
-            <h1 class="text-center">Script for question "X"</h1>
+          <div class="col-6 border collapse" id="recommendations-holder">
+            <!-- <h1 class="text-center">Script for: </h1>
+            <h3 class="text-center">Script</h3>
             <h5>Hint 1</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             <h5>Hint 2</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             <h5>Hint 3</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
 
               <!-- <video autoplay id="video_preview"></video> -->
           </div>
-          <div class="col-6">
+          <div class="col-6 collapse" id="video-container">
               <div class="row">
                 <video autoplay muted id="video_recording" style="width:100%;"></video>
                 <img class="collapse" id="video_recording_gif" src="images/recording.gif" width="70" height="20">
@@ -59,7 +60,7 @@
       <br>
       <div class="row">
         <div class="col-12 text-center">
-          <button type="button" class="btn btn-primary" id="submit_fragment_button">Submit</button>
+          <button type="button" class="btn btn-primary collapse" id="submit_fragment_button">Submit</button>
         </div>
       </div>
     </div>

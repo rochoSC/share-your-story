@@ -31,4 +31,4 @@ if __name__ == '__main__':
         #mongo.db.court.ensure_index( [("name", ASCENDING), ("slug", ASCENDING)], unique=True )
         mongo.db.users.create_index("username", unique=True)
         mongo.db.categories.create_index("name",unique=True)
-    app.run(host='0.0.0.0', port=8081, debug=True)
+    app.run(host='0.0.0.0', port=8081, debug=True, threaded=True)

@@ -1,9 +1,4 @@
 $(document).ready(function() {
-  //This file must be added on every js that uses ajax calls to our API server
-  $.getScript("../js/constants.js", function() {
-     console.log("Constants file loaded")
-  });
-
   var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -18,6 +13,32 @@ $(document).ready(function() {
         }
     }
   };
+  //This file must be added on every js that uses ajax calls to our API server
+  $.getScript("../js/constants.js", function() {
+     console.log("Constants file loaded")
+     $.ajax({
+         type: "GET",
+         url: CONSTANTS.API_BASE_URL + "recommendation/"+getUrlParameter("fragmentId"),
+         success: function(msg){
+           console.log(msg);
+           //TODO: Add message
+           $("#recommendations-holder").append($("<h1>").addClass("text-center").text(msg.title));
+           $("#recommendations-holder").append($("<h3>").addClass("text-center").text("Script"));
+           for (var i = 0; i < msg.recommendations.length; i++) {
+             $("#recommendations-holder").append($("<h5>").text("Hint " + (i+1)));
+             $("#recommendations-holder").append($("<p>").text(msg.recommendations[i]));
+
+           }
+           $("#recommendations-holder").show('slow');
+           $("#video-container").show('slow');
+
+         },
+         error: function(msg){
+           console.log(msg);
+           console.log(msg.responseJSON.message);
+         }
+       });
+  });
 
   var constraints = {
     audio: true,
