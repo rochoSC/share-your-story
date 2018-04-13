@@ -99,7 +99,7 @@ class VideoUpload(Resource):
                 print fragment_id
                 mongo.db.videos.update({"videoId":int(video_id)},{ "$pull": { "fragments": { "fragmentId": int(fragment_id) } } });
                 res = mongo.db.videos.update_one({"videoId":int(video_id)},{ "$push": { "fragments": {
-                    "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailPath":thumbnail_path.replace('\\', '/')
+                    "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailUrl":thumbnail_path.replace('\\', '/')
                 } } });
                 return {"message": "The file has been uploaded"}, 201
             else:
