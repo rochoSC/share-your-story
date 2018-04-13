@@ -8,10 +8,15 @@ from myapi import app
 from flask import send_from_directory
 import time
 
-def abort_if_category_doesnt_exist(todo_id):
-    todo = mongo.db.videos.find_one({"id":int(todo_id)})
-    if todo == None:
-        abort(404, message="Todo {} doesn't exist".format(todo_id))
+def fillDb():
+    for i in range(0,10):
+        mongo.db.videos.insert_one({"published":True, "owner": "roger",
+        "thumbnailUrl":"uploads/thumbnails/1_12_1523605878.24.png",
+        "title": "This is my video " + str(i), "description":"This is my description of my video " +str(i)})
+    for i in range(10,20):
+        mongo.db.videos.insert_one({"published":False, "owner": "roger",
+        "thumbnailUrl":"uploads/thumbnails/1_12_1523605878.24.png",
+        "title": "This is my video " + str(i), "description":"This is my description of my video " +str(i)})
 
 class VideoList(Resource):
     def get(self):
@@ -22,6 +27,20 @@ class VideoList(Resource):
                 listVideos[video["category"]]=[]
             listVideos[video["category"]].append(video)
         return listVideos
+
+class VideoListByUser(Resource):
+    def get(self, username):
+        res = mongo.db.videos.find({"published":True, "owner": username})
+        videos = {}
+        videos["published"] = []
+        videos["incomplete"] = []
+        for video in res:
+            videos["published"].append(video)
+
+        res = mongo.db.videos.find({"published":False, "owner": username})
+        for video in res:
+            videos["incomplete"].append(video)
+        return to_json(videos)
 
 class VideoSearch(Resource):
     def get(self):
@@ -60,7 +79,6 @@ class VideoUpload(Resource):
         video_id = request.form["videoId"]
         fragment_id = request.form["fragmentId"]
 
-        #TODO: Generate filename with date
         video_file_name = video_id + "_" + fragment_id + "_" + str(time.time()) + ".webm"
         thumbnail_file_name = video_id + "_" + fragment_id + "_" + str(time.time()) + ".png"
         video_path = os.path.join("uploads", "videos")
@@ -68,8 +86,6 @@ class VideoUpload(Resource):
         thumbnail_path = os.path.join("uploads", "thumbnails")
         thumbnail_path = os.path.join(thumbnail_path, thumbnail_file_name)
 
-        #TODO: Create unique secure_filename
-        #TODO: Add video URL to video frament etc in mongo
         if video_file:
             video_file.save(video_path)
             print "Video fragment saved at" + video_path
