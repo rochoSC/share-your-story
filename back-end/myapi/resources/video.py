@@ -71,3 +71,23 @@ class VideoUpload(Resource):
                 return {"message": "The associated video does not exist in DB"}, 404
         else:
             return {"message": "File is empty"}, 400
+
+class VideoProject(Resource):
+    def post(self):
+        project = parse_body(request.data)
+        if project['id']=='' :
+            #todo insert
+            try:
+                res = mongo.db.videos.insert(project)
+            except mongoerr.DuplicateKeyError:
+                return (jsonify(project_id=res, message = "Project already existst"), 404)
+        else:
+            #todo update
+            res = mongo.db.videos.update_one({"_id":project['id']}, project)
+        # res = mongo.db.videos.find({"user_id":project["user_id"], "title":project["title"]})
+        # print(res)
+        return (jsonify(project_id=res),201)
+
+    def get(self):
+        project = parse_body(request.data)
+        return to_json(mongo.db.videos.find({"_id":project["id"]}))
