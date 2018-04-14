@@ -7,6 +7,8 @@ import os
 from myapi import app
 from flask import send_from_directory
 import time
+from bson.objectid import ObjectId
+import subprocess
 
 def fillDb():
     for i in range(0,10):
@@ -42,6 +44,30 @@ class VideoListByUser(Resource):
             videos["incomplete"].append(video)
         return to_json(videos)
 
+class Video(Resource):
+    def get(self, video_id):
+        video = to_json(mongo.db.videos.find_one({"_id":ObjectId(video_id)}))
+
+        video_file_name = video_id + "_" + str(time.time()) + ".webm"
+        video_path = os.path.join("uploads", "videos")
+        video_path = os.path.join(video_path, video_file_name)
+        #Generate a single video
+        ffmpeg_command = ["ffmpeg", "-f", "concat", "-safe", "0", "-i", "videosToConcat.txt", "-c", "copy", video_path]
+        video_list_files  = open("videosToConcat.txt", "w")
+        for fragment in video["fragments"]:
+            #ffmpeg_command.append(fragment["videoUrl"].replace('/', '\\'))
+            video_list_files.write("file '" + fragment["videoUrl"].replace('/', '\\') +"'\n")
+        video_list_files.close()
+        subprocess.call(ffmpeg_command)
+
+        mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$set": {"url": video_path} } )
+        video = to_json(mongo.db.videos.find_one({"_id":ObjectId(video_id)}))
+        return video
+
+class Music(Resource):
+    def get(self):
+        return to_json(["uploads/music/Anton_Khoryukov_-_The_Moment_Of_Light.mp3", "uploads/music/Lee_Rosevere_-_You're_Enough.mp3",
+         "uploads/music/Yan_Terrien_-_Male_Washrooms.mp3"])
 class VideoSearch(Resource):
     def get(self):
 
@@ -92,13 +118,10 @@ class VideoUpload(Resource):
             thumbnail_file.save(thumbnail_path)
             print "Thumbnail fragment saved at" + thumbnail_path
 
-            video = mongo.db.videos.find_one({"videoId":int(video_id)})
+            video = mongo.db.videos.find_one({"_id":ObjectId(video_id)})
             if video is not None:
-                #TODO: Delete fragmentId if already exists on video
-                print "========================================================="
-                print fragment_id
-                mongo.db.videos.update({"videoId":int(video_id)},{ "$pull": { "fragments": { "fragmentId": int(fragment_id) } } });
-                res = mongo.db.videos.update_one({"videoId":int(video_id)},{ "$push": { "fragments": {
+                mongo.db.videos.update({"_id":ObjectId(video_id)},{ "$pull": { "fragments": { "fragmentId": int(fragment_id) } } });
+                res = mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$push": { "fragments": {
                     "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailUrl":thumbnail_path.replace('\\', '/')
                 } } });
                 return {"message": "The file has been uploaded"}, 201
