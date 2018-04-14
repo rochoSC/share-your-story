@@ -1,2 +1,3 @@
 *.pyc
 *.webm
+back-end/uploads/thumbnails/*.png

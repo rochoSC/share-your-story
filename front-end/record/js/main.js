@@ -1,7 +1,43 @@
 $(document).ready(function() {
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+  };
   //This file must be added on every js that uses ajax calls to our API server
   $.getScript("../js/constants.js", function() {
      console.log("Constants file loaded")
+     $.ajax({
+         type: "GET",
+         url: CONSTANTS.API_BASE_URL + "recommendation/"+getUrlParameter("fragmentId"),
+         success: function(msg){
+           console.log(msg);
+           //TODO: Add message
+           $("#recommendations-holder").append($("<h1>").addClass("text-center").text(msg.title));
+           $("#recommendations-holder").append($("<h3>").addClass("text-center").text("Script"));
+           for (var i = 0; i < msg.recommendations.length; i++) {
+             $("#recommendations-holder").append($("<h5>").text("Hint " + (i+1)));
+             $("#recommendations-holder").append($("<p>").text(msg.recommendations[i]));
+
+           }
+           $("#recommendations-holder").show('slow');
+           $("#video-container").show('slow');
+
+         },
+         error: function(msg){
+           console.log(msg);
+           console.log(msg.responseJSON.message);
+         }
+       });
   });
 
   var constraints = {
@@ -17,6 +53,7 @@ $(document).ready(function() {
   var recordingTimeOut;
   var recordingTimer;
   var isRecording = false;
+  var isComplete = false;
   //Verify we can actually access the video
   if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
     // Good to go!
@@ -38,11 +75,14 @@ $(document).ready(function() {
     loadStreaming();
 
     $("#rec_button").click(function(){
+
+      video.muted = true;
       console.log('Clicked rec');
       startRecording();
     });
 
     $("#stop_button").click(function(){
+      video.muted = true;
       console.log('Clicked stop');
       clearTimeout(recordingTimeOut);
       clearInterval(recordingTimer);
@@ -55,43 +95,79 @@ $(document).ready(function() {
         var superBuffer = new Blob(recordedBlobs, {type: "video/webm"});
         video.srcObject = null;
         video.src = window.URL.createObjectURL(superBuffer);
+        video.muted = false;
       }
     }).prop('disabled', true);
 
     $("#submit_fragment_button").click(function(){
       console.log('Submitting');
-      var superBuffer = new Blob(recordedBlobs, {type: "video/webm"});
-      var fd = new FormData();
-      fd.append("file_name", "test.webm");
-      fd.append("file", superBuffer);
-      fd.append("video_id", "customid");
-      $.ajax({
-          type: "POST",
-          url: CONSTANTS.API_BASE_URL + "video/upload",
-          data: fd,
-          processData: false,
-          contentType: false,
-          success: function(msg){
-            console.log(msg);
-          },
-          error: function(msg){
-            console.log(msg);
-            console.log(msg.responseJSON.message);
-          }
-        });
+      var videoId = getUrlParameter("videoId");
+      var fragmentId = getUrlParameter("fragmentId");
+
+      var finalVideoFile = new Blob(recordedBlobs, {type: "video/webm"});
+
+      var canvas = document.createElement('canvas');
+      canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(function(videoThumbnailFile) {        // get content as JPEG blob
+        // here the image is a blob
+        var fd = new FormData();
+        fd.append("videoId", videoId);
+        fd.append("fragmentId", fragmentId);
+        fd.append("videoFile", finalVideoFile);
+        fd.append("thumbnailFile", videoThumbnailFile);
+        $.ajax({
+            type: "POST",
+            url: CONSTANTS.API_BASE_URL + "video/upload",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function(msg){
+              console.log(msg);
+              alert(msg.message);
+              window.location = "../edit?id="+videoId;
+            },
+            error: function(msg){
+              console.log(msg);
+              console.log(msg.responseJSON.message);
+            }
+          });
+      }, "image/png", 0.75);
+
     }).prop('disabled', true);
 
     //Starts the recording of the video. Inspired in https://github.com/webrtc/samples/blob/gh-pages/src/content/getusermedia/record/js/main.js
     function startRecording() {
 
-      //TODO: Control the timer
-        //$("#video_recording_progress").attr("aria-valuenow", control).css('width', control+'%')
-      recordingElapsedTime = 0;
-      $("#video_recording_progress").attr("aria-valuenow", 0).css('width', 0+'%')
+      if(recordedBlobs.length>0 && isComplete){
+        //Video will be erased and you will have to record it again
+        var r = confirm("Are you sure you want to record the whole fragment again?");
+        if(r){
+          isComplete = false;
+          recordingElapsedTime = 0;
+          $("#video_recording_progress").attr("aria-valuenow", 0).css('width', 0+'%')
+          recordedBlobs = [];
+          $("#submit_fragment_button").prop('disabled', true);
+        }else{
+          return;
+        }
+
+      }
+      // else if(recordedBlobs.length>0 && !isComplete){
+      //   //Record from were it was left before
+      // }else{
+      //
+      // }
+
+
+      $("#fragment-complete").hide();
+
       loadStreaming();
       $("#video_recording_gif").show();
       $("#rec_button").prop('disabled', true);
-      recordedBlobs = [];
+
       var options = {mimeType: 'video/webm;codecs=vp9'};
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log(options.mimeType + ' is not Supported');
@@ -120,26 +196,42 @@ $(document).ready(function() {
       isRecording = true;
       //Will collect data for only the maximum amount of predefined seconds
       // 100 milliseconds allows our timer to stop properly
-      recordingTimeOut = setTimeout(stopRecording, CONSTANTS.VIDEO_FRAME_MAX_SECS*1000+100);
+      recordingTimeOut = setTimeout(stopRecording, (CONSTANTS.VIDEO_FRAME_MAX_SECS*1000+100)-recordingElapsedTime);
       recordingTimer = setInterval(function(){
-        recordingElapsedTime++;
-        percentaje = (100*recordingElapsedTime)/CONSTANTS.VIDEO_FRAME_MAX_SECS;
+        //console.log(getTimeLeft(recordingTimeOut));
+        recordingElapsedTime+=100;
+        percentaje = (100*recordingElapsedTime)/(CONSTANTS.VIDEO_FRAME_MAX_SECS*1000);
+        if(percentaje == 100){
+          isComplete = true;
+        }
         $("#video_recording_progress").attr("aria-valuenow", percentaje).css('width', percentaje+'%')
-      }, 1000);
+      }, 100);
     }
 
     //Stops the recording from the media recorder
     function stopRecording() {
       if (isRecording){
+        //TODO: Show message when successfully completed for recorder
+        //TODO: Change record to continue or something
+        if(isComplete){
+          //alert('Complete');
+          var marginTop = video.offsetHeight / 2 - 10;
+          $("#fragment-complete").css("margin-top", marginTop+"px");
+          $("#fragment-complete").show();
+          $("#submit_fragment_button").prop('disabled', false);
+          console.log("Disabled");
+        }
+        video.pause();
         clearInterval(recordingTimer);
+        clearTimeout(recordingTimeOut);
         $("#video_recording_gif").hide();
         console.log("Stopped recording");
         mediaRecorder.stop();
         isRecording = false;
         $("#rec_button").prop('disabled', false);
         $("#play_button").prop('disabled', false);
-        console.log(recordedBlobs.length);
-        console.log(recordingElapsedTime);
+      }else{
+        //TODO: is playing but not recording. Just stop it
       }
 
       // $("#submit_fragment_button").prop('disabled', true);

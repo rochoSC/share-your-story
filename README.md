@@ -16,16 +16,18 @@
 - Install Flask-PyMongo for python https://flask-pymongo.readthedocs.io/en/latest/
 - Install flask restfull framework sudo easy_install flask-restful
 - Install Cross origin libraries sudo easy_install -U flask-cors
+- Install ffmpeg video editor following the instructions in https://www.emmecilab.net/installare-ffmpeg-su-cloud9/
 - Changed apache2 config file to point to our front-end folder: sudo nano /etc/apache2/sites-enabled/001-cloud9.conf
 - Also added this configuration information to apache2 config file to serve static files for uploaded videos
 
 == IMPORTANT CONFIGURATION FOR STATIC FILES ==
 
-Alias /images "/var/www/img/"  
-<Directory "/var/www/img">  
-AllowOverride None  
-Order allow,deny  
-Allow from all  
+</Directory>
+   Alias /uploads "/home/ubuntu/workspace/csce656_final_project/back-end/uploads"
+   <Directory "/home/ubuntu/workspace/csce656_final_project/back-end/uploads">
+   AllowOverride None
+   Order allow,deny
+   Allow from all
 </Directory>
 
 ### Run

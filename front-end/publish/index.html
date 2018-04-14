@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Publish video</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+  <!-- Session information -->
+  <div style="margin:20px"  id="usernameSession">
+    <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
+  </div>
+
+  <!-- Your code goes here -->
+  <div class="container-fluid text-center border">
+    <div>
+      <h1>Title</h1>
+      <video autoplay id="final-video" style="width:40%;"></video>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-2 text-right"><button type="button" class="btn btn-primary" id="btn-play" style="width:30%">Play</button></div>
+        <div class="col-2 text-left"><button type="button" class="btn btn-primary" id="btn-stop" style="width:30%">Stop</button></div>
+        <div class="col-4"></div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3 text-left"><button data-toggle="modal" data-target="#music" id="btn-music" type="button" class="btn btn-primary" style="width:100%">Choose music</button></div>
+            <div class="col-md-6 text-left"><p id="music-name">None</p></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3 text-left"><button  data-toggle="modal" data-target="#effects" id="btn-effect" type="button" class="btn btn-primary" style="width:100%">Choose effect</button></div>
+            <div class="col-md-6 text-left"><p id="effect-name">None</p></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3 text-left"><label class="btn btn-primary" style="width:100%">
+              Upload thumbnail <input type="file"  id="btn-thumbnail" hidden accept="image/x-png,image/gif,image/jpeg"></label></div>
+            <div class="col-md-6 text-left"><p id="thumbnail-name">None</p></div>
+          </div>
+          <br>
+        </div>
+        <div class="col-6">
+          <br>
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4"><button  id="btn-share" type="button" class="btn btn-primary" style="width:100%">Share</button></div>
+            <div class="col-4"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="music" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+
+              <div class="modal-header">
+
+                <h4 class="modal-title">Available music</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+
+              <div class="modal-body">
+                <ul class="list-group" id="list-of-music">
+                </ul>
+              </div>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="effects" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+
+              <div class="modal-header">
+
+                <h4 class="modal-title">Available effects</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+
+              <ul class="list-group" id="list-of-effects">
+              </ul>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- This has to always bee added to any html; Start -->
+
+  <!-- Log out confirmation modal -->
+  <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+
+              <div class="modal-header">
+
+                <h4 class="modal-title">Log out</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+
+              <div class="modal-body">
+                  <p>Are you sure you want to Log Out?</p>
+              </div>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <a class="btn btn-danger btn-ok">Log Out</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Global JS -->
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/util.js"></script>
+
+  <!-- This has to always bee added to any html; End -->
+
+  <!-- Local JS -->
+  <script src="js/main.js"></script>
+</body>
+</html>
