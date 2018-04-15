@@ -88,7 +88,6 @@ $(document).ready(function() {
         document.querySelector("video").style.webkitFilter = effect.value;
         document.querySelector("video").style.mozFilter = effect.value;
         document.querySelector("video").style.filter = effect.value;
-        //TODO: Save music, effect and thumbnail on submit
        };
      })(CONSTANTS.AVAILABLE_EFFECTS[i]));
       $("#list-of-effects").append($li);
@@ -97,7 +96,6 @@ $(document).ready(function() {
     $("#btn-play").click(function(){
       video.pause();
       video.currentTime = 0;
-      audio.volume = 0.3;
       video.load();
 
 
@@ -106,6 +104,7 @@ $(document).ready(function() {
         console.log("Play music");
         audio.pause();
         audio.currentTime = 0;
+        audio.volume = 0.3;
         audio.play();
         console.log(audio.duration);
         var fadePoint = videoDuration-4;
@@ -138,6 +137,38 @@ $(document).ready(function() {
       thumbnailFile = document.getElementById("btn-thumbnail");
       var name = thumbnailFile.value.split("\\");
       $("#thumbnail-name").text(name[name.length-1]);
+    });
+
+    $("#btn-share").click(function(){
+      if(!thumbnailFile){
+        alert("You need to provide a thumbnail");
+        return;
+      }
+      var fd = new FormData();
+      fd.append("videoId", getUrlParameter("videoId"));
+      fd.append("thumbnailFile", thumbnailFile.files[0]);
+      if(musicPath){
+        fd.append("backgroundMusicUrl", musicPath);
+      }
+      if(effectType){
+        fd.append("effect", effectType.name);
+      }
+      $.ajax({
+          type: "POST",
+          url: CONSTANTS.API_BASE_URL + "video/publish",
+          data: fd,
+          processData: false,
+          contentType: false,
+          success: function(msg){
+            console.log(msg);
+            alert(msg.message);
+            window.location = "/";
+          },
+          error: function(msg){
+            console.log(msg);
+            console.log(msg.responseJSON.message);
+          }
+        });
     });
 
     function stopAudio(){

@@ -4,7 +4,7 @@ from myapi import mongo #defined in __init__.py
 # from myapi.resources.todo import Todo,TodoList
 from myapi.resources.user import Login, Register
 from myapi.resources.category import Category, CategoryList
-from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject
+from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject, VideoPublish
 from myapi.resources.recommendation import Recommendation
 
 # api.add_resource(TodoList, '/todos')
@@ -24,6 +24,7 @@ api.add_resource(VideoProject,'/video/create')
 api.add_resource(Video,'/video/<video_id>')
 api.add_resource(VideoUpload,'/video/upload')
 api.add_resource(Music,'/video/music')
+api.add_resource(VideoPublish,'/video/publish')
 
 #The array of recommendations to record the specified fragment
 api.add_resource(Recommendation,'/recommendation/<fragment_id>')
