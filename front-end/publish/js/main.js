@@ -16,9 +16,13 @@ $(document).ready(function() {
 
 
   var video = document.querySelector('#final-video');//For some reason does not work with jquery selectors
+
   var thumbnailFile;
   var musicPath;
   var effectType;
+  var audio;
+  var videoDuration;
+  var fadeAudio;
 
 
   //This file must be added on every js that uses ajax calls to our API server
@@ -30,7 +34,12 @@ $(document).ready(function() {
     success: function(msg){
       console.log(msg);
       video.src = "../"+msg.url;
+      $("#video-title").text(msg.title);
       video.pause();
+      video.addEventListener('ended',stopAudio,false);
+      $("#final-video").on("loadedmetadata", function() {
+        videoDuration = video.duration;
+      });
     },
     error: function(msg){
       console.log(msg);
@@ -54,6 +63,9 @@ $(document).ready(function() {
                 $("#music").modal("hide");
                 $("#music-name").text(name);
                 musicPath = path;
+                console.log("Adding URL to music");
+                audio = new Audio("../"+musicPath);
+                audio.volume = 0.3;
            };
           })(path, name));
           $("#list-of-music").append($li);
@@ -76,7 +88,6 @@ $(document).ready(function() {
         document.querySelector("video").style.webkitFilter = effect.value;
         document.querySelector("video").style.mozFilter = effect.value;
         document.querySelector("video").style.filter = effect.value;
-        //TODO: Save music, effect and thumbnail on submit
        };
      })(CONSTANTS.AVAILABLE_EFFECTS[i]));
       $("#list-of-effects").append($li);
@@ -86,22 +97,89 @@ $(document).ready(function() {
       video.pause();
       video.currentTime = 0;
       video.load();
+
+
+      console.log("Video elapsed: " + video.currentTime);
+      if(musicPath){
+        console.log("Play music");
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = 0.3;
+        audio.play();
+        console.log(audio.duration);
+        var fadePoint = videoDuration-4;
+        fadeAudio = setInterval(function () {
+
+          // Only fade if past the fade out point or not at zero already
+
+            console.log(audio.volume);
+          var step = 0.02;
+          if ((audio.currentTime >= fadePoint) && ((audio.volume - step) >= 0.0)) {
+            audio.volume -= step;
+          }
+          // When volume at zero stop all the intervalling
+          if ((audio.volume - step) <= 0.0) {
+            stopAudio();
+          }
+        }, 200);
+      }
+
     });
 
     $("#btn-stop").click(function(){
       video.pause();
       video.currentTime = 0;
+      stopAudio();
     });
-
-
 
     $("#btn-thumbnail").change(function(){
       console.log("Click thumbnail");
       thumbnailFile = document.getElementById("btn-thumbnail");
       var name = thumbnailFile.value.split("\\");
       $("#thumbnail-name").text(name[name.length-1]);
-
     });
+
+    $("#btn-share").click(function(){
+      if(!thumbnailFile){
+        alert("You need to provide a thumbnail");
+        return;
+      }
+      var fd = new FormData();
+      fd.append("videoId", getUrlParameter("videoId"));
+      fd.append("thumbnailFile", thumbnailFile.files[0]);
+      if(musicPath){
+        fd.append("backgroundMusicUrl", musicPath);
+      }
+      if(effectType){
+        fd.append("effect", effectType.name);
+      }
+      $.ajax({
+          type: "POST",
+          url: CONSTANTS.API_BASE_URL + "video/publish",
+          data: fd,
+          processData: false,
+          contentType: false,
+          success: function(msg){
+            console.log(msg);
+            alert(msg.message);
+            window.location = "/";
+          },
+          error: function(msg){
+            console.log(msg);
+            console.log(msg.responseJSON.message);
+          }
+        });
+    });
+
+    function stopAudio(){
+      if(audio){
+        audio.pause()
+        audio.currentTime = 0;
+        if(fadeAudio){
+          clearInterval(fadeAudio);
+        }
+      }
+    }
 
   });
 

@@ -17,16 +17,6 @@ def fillCategories():
         mongo.db.categories.insert({"name":cat})
 
 
-def fillDb():
-    for i in range(0,10):
-        mongo.db.videos.insert_one({"published":True, "owner": "roger",
-        "thumbnailUrl":"uploads/thumbnails/1_12_1523605878.24.png",
-        "title": "This is my video " + str(i), "description":"This is my description of my video " +str(i)})
-    for i in range(10,20):
-        mongo.db.videos.insert_one({"published":False, "owner": "roger",
-        "thumbnailUrl":"uploads/thumbnails/1_12_1523605878.24.png",
-        "title": "This is my video " + str(i), "description":"This is my description of my video " +str(i)})
-
 class VideoList(Resource):
     def get(self):
         res = to_json(mongo.db.videos.find({"published":True}).sort([("category",1)]))
@@ -57,6 +47,7 @@ class Video(Resource):
 
         video_file_name = video_id + "_" + str(time.time()) + ".webm"
         video_path = os.path.join("uploads", "videos")
+        video_path = os.path.join(video_path, "published")
         video_path = os.path.join(video_path, video_file_name)
         #Generate a single video
         ffmpeg_command = ["ffmpeg", "-f", "concat", "-safe", "0", "-i", "videosToConcat.txt", "-c", "copy", video_path]
@@ -67,7 +58,7 @@ class Video(Resource):
         video_list_files.close()
         subprocess.call(ffmpeg_command)
 
-        mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$set": {"url": video_path} } )
+        mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$set": {"url": video_path.replace('\\', '/')} } )
         video = to_json(mongo.db.videos.find_one({"_id":ObjectId(video_id)}))
         return video
 
@@ -75,6 +66,7 @@ class Music(Resource):
     def get(self):
         return to_json(["uploads/music/Anton_Khoryukov_-_The_Moment_Of_Light.mp3", "uploads/music/Lee_Rosevere_-_You're_Enough.mp3",
          "uploads/music/Yan_Terrien_-_Male_Washrooms.mp3"])
+
 class VideoSearch(Resource):
     def get(self):
 
@@ -115,8 +107,10 @@ class VideoUpload(Resource):
         video_file_name = video_id + "_" + fragment_id + "_" + str(time.time()) + ".webm"
         thumbnail_file_name = video_id + "_" + fragment_id + "_" + str(time.time()) + ".png"
         video_path = os.path.join("uploads", "videos")
+        video_path = os.path.join(video_path, "fragments")
         video_path = os.path.join(video_path, video_file_name)
         thumbnail_path = os.path.join("uploads", "thumbnails")
+        thumbnail_path = os.path.join(thumbnail_path, "fragments")
         thumbnail_path = os.path.join(thumbnail_path, thumbnail_file_name)
 
         if video_file:
@@ -131,6 +125,42 @@ class VideoUpload(Resource):
                 res = mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$push": { "fragments": {
                     "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailUrl":thumbnail_path.replace('\\', '/')
                 } } });
+                return {"message": "The file has been uploaded"}, 201
+            else:
+                return {"message": "The associated video does not exist in DB"}, 404
+        else:
+            return {"message": "File is empty"}, 400
+
+class VideoPublish(Resource):
+    def post(self):
+        # check if the post request has the file part
+
+        if 'thumbnailFile' not in request.files:
+            return {"message": "Thumbnail file not found in the request"}, 400
+        if 'videoId' not in request.form:
+            return {"message": "Video ID is required"}, 400
+
+        thumbnail_file = request.files["thumbnailFile"]
+        video_id = request.form["videoId"]
+
+        thumbnail_file_name = video_id + "_" + "_" + str(time.time()) + ".png"
+        thumbnail_path = os.path.join("uploads", "thumbnails")
+        thumbnail_path = os.path.join(thumbnail_path, "published")
+        thumbnail_path = os.path.join(thumbnail_path, thumbnail_file_name)
+
+        if thumbnail_file:
+            thumbnail_file.save(thumbnail_path)
+            print "Thumbnail video saved at" + thumbnail_path
+            to_update = { "thumbnailUrl":thumbnail_path.replace('\\', '/'), "published": True};
+
+            if "backgroundMusicUrl" in request.form:
+                to_update["backgroundMusicUrl"] = request.form["backgroundMusicUrl"]
+            if "effect" in request.form:
+                to_update["effect"] = request.form["effect"]
+
+            video = mongo.db.videos.find_one({"_id":ObjectId(video_id)})
+            if video is not None:
+                mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$set": to_update});
                 return {"message": "The file has been uploaded"}, 201
             else:
                 return {"message": "The associated video does not exist in DB"}, 404
@@ -163,3 +193,9 @@ class Project(Resource):
         
         
 
+<<<<<<< HEAD
+=======
+    def get(self):
+        project = parse_body(request.data)
+        return to_json(mongo.db.videos.find({"_id":project["id"]}))
+>>>>>>> refs/remotes/origin/master
