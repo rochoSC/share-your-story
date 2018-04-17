@@ -2,45 +2,142 @@
 <html lang="en" >
 
 <head>
+    <meta charset="UTF-8">
+    <title>Moti Vate</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/edit/tags.css">
 
 </head>
 
 <body>
   <!-- Session information -->
+  
+
+  <!-- Your code goes here -->
+<div class="container">
   <div style="margin:20px"  id="usernameSession">
     <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
   </div>
+  <form id="projectForm" method="post" data-toggle="validator">
+    <input type="hidden" id="projectId" />
+    <div class="row" name="formularioClasico">
+      <div class="col">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input required type="text" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Title">
+          <small id="titleHelp" class="form-text text-muted">Tell us what's your story's name.</small>
+        </div>
+        <div class="form-group">
+          <label for="categories">Category</label>
+          <select id="categories" class="form-control">
+                      <option selected>Choose...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea required class="form-control" id="description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="title">Tags</label>
+          <div class="tags-input form-control" data-name="tags-input" id="tags" aria-describedby="tagsHelp">
+            <small id="titleHelp" class="form-text text-muted">Write tags separated by commas</small>
+          </div>
+        </div>
+      </div>
 
-  <!-- Your code goes here -->
+      <div class="row" name="fragmentos">
+        <div class="col-lg-6">
+          <!--Cada columna es un fragmento-->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="thumbnail">
+                  <img src="http://placehold.it/250x250">
+                  <p>Fragment 1</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!--Cada columna es un fragmento-->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="thumbnail">
+                  <img src="http://placehold.it/250x250">
+                  <p>Fragment 2</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!--Cada columna es un fragmento-->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="thumbnail">
+                  <img src="http://placehold.it/250x250">
+                  <p>Fragment 3</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!--Cada columna es un fragmento-->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="thumbnail">
+                  <img src="http://placehold.it/250x250">
+                  <p>Fragment 4</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row" name="botones" id="botones">
+        <div class="col">
+          <button type="submit" class="btn btn-outline-dark btn-lg">Delete</button>
+          <button type="submit" class="btn btn-outline-success btn-lg" id="createButton">Create</button>
+          <button type="submit" class="btn btn-outline-danger btn-lg">Publish</button>
+        </div>
+      </div>
+  </form>
+  </div>
 
   <!-- This has to always bee added to any html; Start -->
 
   <!-- Log out confirmation modal -->
   <div class="modal fade" id="confirmLogOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-              <div class="modal-header">
+        <div class="modal-header">
 
-                <h4 class="modal-title">Log out</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              </div>
+          <h4 class="modal-title">Log out</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
 
-              <div class="modal-body">
-                  <p>Are you sure you want to Log Out?</p>
-              </div>
+        <div class="modal-body">
+          <p>Are you sure you want to Log Out?</p>
+        </div>
 
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-danger btn-ok">Log Out</a>
-              </div>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-danger btn-ok">Log Out</a>
+        </div>
       </div>
+    </div>
   </div>
 
   <!-- Global JS -->
@@ -51,5 +148,7 @@
   <!-- This has to always bee added to any html; End -->
 
   <!-- Local JS -->
+  <script src="../js/edit/tags.js"></script>
+  <script src="../js/edit/edit.js"></script>
 </body>
 </html>

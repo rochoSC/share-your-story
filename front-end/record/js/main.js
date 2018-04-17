@@ -64,7 +64,8 @@ $(document).ready(function() {
     }
 
     function handleError(error) {
-      console.error('Error recording video!', error);
+      console.log('Error recording video!');
+      console.log(error)
       alert("We could not set up the video recording. Make sure you granted rights!");
     }
 

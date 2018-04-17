@@ -4,7 +4,7 @@ from myapi import mongo #defined in __init__.py
 # from myapi.resources.todo import Todo,TodoList
 from myapi.resources.user import Login, Register
 from myapi.resources.category import Category, CategoryList
-from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject
+from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject, Project
 from myapi.resources.recommendation import Recommendation
 
 # api.add_resource(TodoList, '/todos')
@@ -20,6 +20,8 @@ api.add_resource(VideoList,'/videos')
 api.add_resource(VideoListByUser,'/videos/user/<username>')
 api.add_resource(VideoSearch,'/video/search')
 api.add_resource(VideoProject,'/video/create')
+api.add_resource(Project,'/project/<project_id>')
+
 
 api.add_resource(Video,'/video/<video_id>')
 api.add_resource(VideoUpload,'/video/upload')

@@ -9,6 +9,13 @@ from flask import send_from_directory
 import time
 from bson.objectid import ObjectId
 import subprocess
+from flask import jsonify
+
+def fillCategories():
+    categories = ["Health", "Relationships", "Losing a loveone", "Bullying"]
+    for cat in categories:
+        mongo.db.categories.insert({"name":cat})
+
 
 def fillDb():
     for i in range(0,10):
@@ -133,19 +140,26 @@ class VideoUpload(Resource):
 class VideoProject(Resource):
     def post(self):
         project = parse_body(request.data)
-        if project['id']=='' :
+        print project
+        if not("id" in project.keys()) or (project["id"]==""):
             #todo insert
             try:
                 res = mongo.db.videos.insert(project)
             except mongoerr.DuplicateKeyError:
-                return (jsonify(project_id=res, message = "Project already existst"), 404)
+                return {"message" : "Project already existst"}, 404
         else:
             #todo update
-            res = mongo.db.videos.update_one({"_id":project['id']}, project)
+            id = project.pop("id")
+            res = mongo.db.videos.update({"_id":ObjectId(id)},project)
+            res = mongo.db.videos.find({"_id":ObjectId(id)})
+            res = id
         # res = mongo.db.videos.find({"user_id":project["user_id"], "title":project["title"]})
         # print(res)
-        return (jsonify(project_id=res),201)
+        return {"projectId":str(res)},201
 
-    def get(self):
-        project = parse_body(request.data)
-        return to_json(mongo.db.videos.find({"_id":project["id"]}))
+class Project(Resource):
+    def get(self, project_id):
+        return to_json(mongo.db.videos.find({"_id":ObjectId(project_id)}))
+        
+        
+

@@ -15,6 +15,14 @@ class Category(Resource):
         res = mongo.db.categories.find_one({"id":int(todo_id)})
         return to_json(res)
 
+
+
+def fillCategories():
+    categories = ["Health", "Relationships", "Losing a loveone", "Bullying"]
+    for cat in categories:
+        mongo.db.categories.insert({"name":cat})
+
+
 class CategoryList(Resource):
     def post(self):
         category = parse_body(request.data) 
