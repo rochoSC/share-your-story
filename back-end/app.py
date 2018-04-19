@@ -4,11 +4,9 @@ from myapi import mongo #defined in __init__.py
 # from myapi.resources.todo import Todo,TodoList
 from myapi.resources.user import Login, Register
 from myapi.resources.category import Category, CategoryList
-<<<<<<< HEAD
-from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject, Project
-=======
-from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject, VideoPublish
->>>>>>> refs/remotes/origin/master
+
+from myapi.resources.video import VideoList, VideoUpload, VideoSearch, VideoListByUser, Video, Music, VideoProject, Project,VideoPublish,DestroyProject
+
 from myapi.resources.recommendation import Recommendation
 
 # api.add_resource(TodoList, '/todos')
@@ -25,7 +23,7 @@ api.add_resource(VideoListByUser,'/videos/user/<username>')
 api.add_resource(VideoSearch,'/video/search')
 api.add_resource(VideoProject,'/video/create')
 api.add_resource(Project,'/project/<project_id>')
-
+api.add_resource(DestroyProject,'/project/delete')
 
 api.add_resource(Video,'/video/<video_id>')
 api.add_resource(VideoUpload,'/video/upload')
@@ -35,6 +33,7 @@ api.add_resource(VideoPublish,'/video/publish')
 #The array of recommendations to record the specified fragment
 api.add_resource(Recommendation,'/recommendation/<fragment_id>')
 
+
 if __name__ == '__main__':
 
     #Setting up DB requirements
@@ -42,4 +41,4 @@ if __name__ == '__main__':
         #mongo.db.court.ensure_index( [("name", ASCENDING), ("slug", ASCENDING)], unique=True )
         mongo.db.users.create_index("username", unique=True)
         mongo.db.categories.create_index("name",unique=True)
-    app.run(host='0.0.0.0', port=8081, debug=True, threaded=True)
+    app.run(host='127.0.0.1', port=8081, debug=True, threaded=True)

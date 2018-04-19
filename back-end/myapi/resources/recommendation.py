@@ -15,7 +15,7 @@ def fillRecommendations():
         "title" : "Title for fragment " + str(i+1)});
 
 class Recommendation(Resource):
-    def get(self, fragment_id):
+    def get(self, fragment_id):        
         recommendation = mongo.db.recommendations.find_one({"fragmentId":int(fragment_id)})
         if recommendation == None:
             return {"message": "The recommendation for that fragment does not existst"}, 404

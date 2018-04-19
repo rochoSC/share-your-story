@@ -55,8 +55,8 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <a href="#" class="thumbnail">
-                  <img src="http://placehold.it/250x250">
+                <a id="fragmento1" class="img-fluid">
+                  <img id="thumbnail1" src="http://placehold.it/250x250" width="100%">
                   <p>Fragment 1</p>
                 </a>
               </div>
@@ -68,8 +68,8 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <a href="#" class="thumbnail">
-                  <img src="http://placehold.it/250x250">
+                <a id="fragmento2" class="img-fluid">
+                  <img id="thumbnail2" src="http://placehold.it/250x250" width="100%">
                   <p>Fragment 2</p>
                 </a>
               </div>
@@ -81,8 +81,8 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <a href="#" class="thumbnail">
-                  <img src="http://placehold.it/250x250">
+                <a id="fragmento3" class="img-fluid">
+                  <img id="thumbnail3" src="http://placehold.it/250x250" width="100%">
                   <p>Fragment 3</p>
                 </a>
               </div>
@@ -94,9 +94,22 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <a href="#" class="thumbnail">
-                  <img src="http://placehold.it/250x250">
+                <a id="fragmento4" class="img-fluid">
+                  <img id="thumbnail4" src="http://placehold.it/250x250" width="100%">
                   <p>Fragment 4</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!--Cada columna es un fragmento-->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a id="fragmento5" class="img-fluid">
+                  <img id="thumbnail5" src="http://placehold.it/250x250" width="100%">
+                  <p>Fragment 5</p>
                 </a>
               </div>
             </div>
@@ -107,9 +120,10 @@
 
       <div class="row" name="botones" id="botones">
         <div class="col">
-          <button type="submit" class="btn btn-outline-dark btn-lg">Delete</button>
+          <a id="dashboard" href="../dashboard" class="btn btn-outline-primary btn-lg">Dashboard</a>
+          <button type="button" id="deleteButton" class="btn btn-outline-dark btn-lg">Delete</button>
           <button type="submit" class="btn btn-outline-success btn-lg" id="createButton">Create</button>
-          <button type="submit" class="btn btn-outline-danger btn-lg">Publish</button>
+          <a id="publishButton" class="btn btn-outline-danger btn-lg">Publish</a>
         </div>
       </div>
   </form>

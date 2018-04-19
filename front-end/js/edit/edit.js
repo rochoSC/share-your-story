@@ -78,7 +78,6 @@ $(document).ready(function() {
         printError(jqXHR, textStatus, errorThrown)
       }
     }); //ajax
-
     $.getScript("../js/edit/tags.js", function() {
      var projectId = getUrlParameter("id")
      if(projectId){
@@ -90,17 +89,37 @@ $(document).ready(function() {
           data: JSON.stringify({}),
           //dataType: 'json',
           success: function(msg) {
-            console.log(msg[0]["title"])
-            $("#title").val(msg[0]["title"])
-            $("#description").val(msg[0]["description"])
-            $("#tags-input").val(msg[0]["tags"])
-            console.log(msg[0]["fragments"])
+            owner: localStorage.getItem("usernameSession");            
+            $("#title").val(msg[0]["title"]);
+            $("#description").val(msg[0]["description"]);
+            $("#projectId").val(msg[0]["_id"]["$oid"]);
+            console.log(msg)
+            var count = 0;
+
+            msg[0]["fragments"].forEach(function(frag){
+              console.log(frag)
+              document.getElementById("thumbnail"+frag["fragmentId"]).setAttribute("src","../"+frag["thumbnailUrl"])
+              count+=1
+            });
+            console.log(count)
+            if(count==CONSTANTS.NUMBER_OF_FRAGMENTS){              
+              document.getElementById("publishButton").setAttribute("href","../publish?videoId="+msg[0]["_id"]["$oid"])
+            }
+            
+            // $("#tags-input").val(msg[0]["tags"])
+            document.getElementById("fragmento1").setAttribute("href","../record?videoId="+msg[0]["_id"]["$oid"]+"&fragmentId=1");
+            document.getElementById("fragmento2").setAttribute("href","../record?videoId="+msg[0]["_id"]["$oid"]+"&fragmentId=2");
+            document.getElementById("fragmento3").setAttribute("href","../record?videoId="+msg[0]["_id"]["$oid"]+"&fragmentId=3");
+            document.getElementById("fragmento4").setAttribute("href","../record?videoId="+msg[0]["_id"]["$oid"]+"&fragmentId=4");
+            document.getElementById("fragmento5").setAttribute("href","../record?videoId="+msg[0]["_id"]["$oid"]+"&fragmentId=5");
+            document.getElementById("createButton").innerHTML = "Save"
+            
             
           },
           error: function(jqXHR, textStatus, errorThrown) {
             printError(jqXHR, textStatus, errorThrown)
           }
-        });
+        });      
     } //IF 
     });//loading files
   });
@@ -115,17 +134,25 @@ $("#projectForm").submit(function() {
     contentType: "application/json",
     url: CONSTANTS.API_BASE_URL + "video/create",
     data: JSON.stringify({
-      owner: localStorage.getItem("owner"),
+      owner: localStorage.getItem("usernameSession"),
       id: $("#projectId").val(),
       title: $("#title").val(),
       category: $("#categories").val(),
       description: $("#description").val(),
-      tags: $("#tags-input").val()
+      tags: $("#tags-input").val(),
+      thumbnailUrl:"/uploads/default.jpg",
+      published:false,
+      fragments: []
     }),
     dataType: 'json',
     success: function(msg) {
       localStorage.setItem("projectId", msg["projectId"]);
-      document.getElementById("projectId").value = msg["projectId"]
+      document.getElementById("projectId").value=msg["projectId"]
+      document.getElementById("fragmento1").setAttribute("href","../record?videoId="+msg["projectId"]+"&fragmentId=1");
+      document.getElementById("fragmento2").setAttribute("href","../record?videoId="+msg["projectId"]+"&fragmentId=2");
+      document.getElementById("fragmento3").setAttribute("href","../record?videoId="+msg["projectId"]+"&fragmentId=3");
+      document.getElementById("fragmento4").setAttribute("href","../record?videoId="+msg["projectId"]+"&fragmentId=4");
+      document.getElementById("fragmento5").setAttribute("href","../record?videoId="+msg["projectId"]+"&fragmentId=5");
       document.getElementById("createButton").innerHTML = "Save"
     },
     error: function(msg) {
@@ -135,6 +162,31 @@ $("#projectForm").submit(function() {
   return false;
 });
 
+
+
+$("#deleteButton").click(function(){    
+  if($("#projectId").val()){    
+    if(confirm("You are about to delete "+$("#title").val())){
+    $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: CONSTANTS.API_BASE_URL + "project/delete",
+    data: JSON.stringify({      
+      id: $("#projectId").val()      
+    }),
+    dataType: 'json',
+    success: function(msg) {
+     //redirect
+     console.log("It was deleted")
+     window.location="../dashboard"
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+            printError(jqXHR, textStatus, errorThrown)
+    }
+  });//ajax
+  }//confirm
+  }//if
+}); //onclick
 
 
 //Submit loggin info

@@ -18,7 +18,7 @@ def fillCategories():
 
 
 class VideoList(Resource):
-    def get(self):
+    def get(self):        
         res = to_json(mongo.db.videos.find({"published":True}).sort([("category",1)]))
         listVideos = {}
         for video in res:
@@ -54,7 +54,8 @@ class Video(Resource):
         video_list_files  = open("videosToConcat.txt", "w")
         for fragment in video["fragments"]:
             #ffmpeg_command.append(fragment["videoUrl"].replace('/', '\\'))
-            video_list_files.write("file '" + fragment["videoUrl"].replace('/', '\\') +"'\n")
+            #video_list_files.write("file '" + fragment["videoUrl"].replace('/', '\\') +"'\n")
+            video_list_files.write("file '" + fragment["videoUrl"] +"'\n")
         video_list_files.close()
         subprocess.call(ffmpeg_command)
 
@@ -151,7 +152,7 @@ class VideoPublish(Resource):
         if thumbnail_file:
             thumbnail_file.save(thumbnail_path)
             print "Thumbnail video saved at" + thumbnail_path
-            to_update = { "thumbnailUrl":thumbnail_path.replace('\\', '/'), "published": True};
+            to_update = { "thumbnailUrl":thumbnail_path, "published": True};
 
             if "backgroundMusicUrl" in request.form:
                 to_update["backgroundMusicUrl"] = request.form["backgroundMusicUrl"]
@@ -189,13 +190,14 @@ class VideoProject(Resource):
 
 class Project(Resource):
     def get(self, project_id):
-        return to_json(mongo.db.videos.find({"_id":ObjectId(project_id)}))
-        
-        
+        return to_json(mongo.db.videos.find({"_id":ObjectId(project_id)}))        
+    # def get(self):
+    #     print "Hola Mundo"
+    #     #fillCategories()
 
-<<<<<<< HEAD
-=======
-    def get(self):
-        project = parse_body(request.data)
-        return to_json(mongo.db.videos.find({"_id":project["id"]}))
->>>>>>> refs/remotes/origin/master
+class DestroyProject(Resource):
+    def post(self):
+        project = parse_body(request.data) 
+        print project
+        mongo.db.videos.remove({"_id": ObjectId(project["id"])})
+
