@@ -30,10 +30,10 @@
         });
 
         el.appendChild(mainInput);
-        el.appendChild(hiddenInput);
-        console.log()
-        tags = localStorage.getItem("tags").split(",")
+        el.appendChild(hiddenInput);          
+        
         if (localStorage.getItem("tags")) {
+            tags = localStorage.getItem("tags").split(",")
             tags.forEach(function(t){
                 if(t.length>0){
                     addTag(t);

@@ -1,5 +1,4 @@
-function fillPage(msg) {
-
+function fillPage(msg) {  
   jQuery.each(msg, function(index1, categories) {
     var $contenido = $("<div>").attr("id","subWrapper");
     var $idControl = "#content".concat(index1)
@@ -18,9 +17,10 @@ function fillPage(msg) {
       //hay un for que va hasta el 4
       for (i = 0; i < 4 && i < categories.length; i++) {
         var $video = $("<div>").addClass("col-xs-3");
-        var $link = $("<a>").attr("href", "#?id=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target", "#VideoWatch").attr("data-toggle", "modal").data("src", categories[v]["url"]);
+        var $link = $("<a>").attr("href", "#?videoId=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target", "#VideoWatch").attr("data-toggle", "modal").data("src", categories[v]["url"]);
         $link.data("title", categories[v]["title"]).data("description", categories[v]["description"])
-        var $thumbnail = $("<img>").attr("src", categories[v]["thumbnail"]); //add thumbnailroute
+        var $thumbnail = $("<img>").attr("src", categories[v]["thumbnailUrl"]); //add thumbnailroute
+        console.log(categories[v]["thumbnailUrl"])
         $link.append($thumbnail);
         $video.append($link);
         $row.append($video);
@@ -53,12 +53,12 @@ $(document).ready(function() {
   var usernameSession = localStorage.getItem("usernameSession");
 
   if (usernameSession) {
-    $("#usernameSession").show();
+    $("#logOutDropDown").show();
     $("#goToDashboard").show();
     $("#shareStory").hide();
   }
   else {
-    $("#usernameSession").hide();
+    $("#logOutDropDown").hide();
     $("#goToDashboard").hide();
     $("#shareStory").show();
   }
@@ -72,11 +72,13 @@ $(document).ready(function() {
       //contentType: "application/json",
       url: CONSTANTS.API_BASE_URL + "videos",
       //dataType: 'json',
-      success: function(msg) {
+      success: function(msg) {        
         fillPage(msg)
       },
       error: function(jqXHR, textStatus, errorThrown) {
+        console.log("Error")
         printError(jqXHR, textStatus, errorThrown)
+
       }
     });
 
@@ -188,9 +190,9 @@ $(document).ready(function() {
      var myVideoURL = $(this).data('src');
      if (!myVideoURL.includes("embed")){
        pos =myVideoURL.lastIndexOf("/")
-       myVideoURL = "http://www.youtube.com/embed/".concat(myVideoURL.substr(pos+1,myVideoURL.length))
+       myVideoURL = myVideoURL
      }
-     $(".modal-body #videoToWatch").attr( "src", myVideoURL);
+     $(".modal-body #final-video").attr( "src", myVideoURL);
      $("#videoTitle").text($(this).data('title'))
      $("#titleDescription").text($(this).data('description'))
 

@@ -18,7 +18,7 @@ def fillCategories():
 
 
 class VideoList(Resource):
-    def get(self):        
+    def get2(self):        
         res = to_json(mongo.db.videos.find({"published":True}).sort([("category",1)]))
         listVideos = {}
         for video in res:
@@ -26,6 +26,23 @@ class VideoList(Resource):
                 listVideos[video["category"]]=[]
             listVideos[video["category"]].append(video)
         return listVideos
+
+    def get(self):        
+        cats = to_json(mongo.db.categories.find())
+        listVideos={}           
+        for cat in cats:
+            cur = mongo.db.videos.find({"published":True,"category":cat["_id"]["$oid"]})            
+            if(cur.count()>0):            
+                listVideos[cat["name"]] = [x for x in to_json(cur)]
+        return listVideos            
+        
+        #res = to_json(mongo.db.videos.find({"published":True}).sort([("category",1)]))
+        # listVideos = {}
+        # for video in res:
+        #     if not(video["category"] in listVideos):
+        #         listVideos[video["category"]]=[]
+        #     listVideos[video["category"]].append(video)
+        # return listVideos
 
 class VideoListByUser(Resource):
     def get(self, username):

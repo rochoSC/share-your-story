@@ -22,24 +22,71 @@
 
 <body>
   <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <form class="navbar-form navbar-btn navbar-left " role="search" id="searchForm">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." id="searchText">
-            <span class="input-group-btn">
-              <button class="btn btn-secondary" type="button" id="searchButton" >Go!</button>
-            </span>
-          </div>
-      </form>
-      <!-- Login Modal -->
-      <!-- <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal">Share a History</button> -->
-      <button type="button" class="btn btn-primary navbar-btn navbar-right" data-toggle="modal" data-target="#loginModal" id="shareStory">Share a Story</button>
-      <a href="/dashboard" class="btn btn-primary btn-lg active collapse" role="button" aria-pressed="true" id="goToDashboard">Dashboard</a>
-      <div class="collapse" style="margin:20px" id="usernameSession">
-        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
-      </div>
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Zorkivate</a>
     </div>
-  </nav>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      
+      <form class="navbar-form navbar-left"  id="searchForm">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default" id="searchButton" >Go!</button>
+      </form>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li id="shareStory"> <a href="#" data-toggle="modal" data-target="#loginModal" >Share a Story
+          </a></li>        
+        <li class="active" id="goToDashboard"><a href="/dashboard">Dashboard <span class="sr-only">(current)</span></a></li>
+        <li class="dropdown" id="logOutDropDown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Session <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" data-toggle="modal" data-target="#confirmLogOut">Log Out</a></li>            
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  <!-- <nav class="navbar navbar-default fixed-top">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a href="#" class="nav-link btn btn-primary" data-toggle="modal" data-target="#loginModal" id="shareStory">Share a Story
+          </a>
+        </li>
+        <li class="nav-item">
+         <a href="/dashboard" class="nav-link btn btn-primary btn-lg collapse" aria-pressed="true" id="goToDashboard">Dashboard</a>
+       </li>
+       <li class="nav-item dropdown">
+        <div class="dropdown-menu " style="margin:20px" id="logOutDropDown" >
+          <a class="nav-link dropdown-toggle" href="#" id="usernameSession" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Admin
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">  
+          <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Log Out</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+     <form class="form-inline my-2 my-lg-0 " role="search" id="searchForm">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for..." id="searchText">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button" id="searchButton" >Go!</button>
+          </span>
+        </div>
+      </form> 
+  </div>
+</nav> -->
   <div id="wrapper" ></div> <!-- Adding the carrusell here -->
   <!--end of module-section-->
   <!-- Include the above in your HEAD tag ---------->
@@ -138,7 +185,7 @@
   
   
 
- <!--Watching a video -->
+  <!--Watching a video -->
   <!-- Log out confirmation modal -->
   <div class="modal fade" id="VideoWatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -150,18 +197,20 @@
         </div>
 
         <div class="modal-body">
-          <iframe width="560" height="315" id="videoToWatch" frameborder="0" allowfullscreen>
-          </iframe>
+          <div>
+            <h1 id="video-title">s</h1>
+            <video autoplay id="final-video" style="width:40%;" preload="metadata"></video>
+          </div>
           <p id="titleDescription"></p>
         </div>
 
         <!--<div class="modal-footer">-->
-        <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
-        <!--  <a class="btn btn-danger btn-ok">Log Out</a>-->
-        <!--</div>-->
+          <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+          <!--  <a class="btn btn-danger btn-ok">Log Out</a>-->
+          <!--</div>-->
+        </div>
       </div>
     </div>
-  </div>
 
   <!-- This has to always bee added to any html; End -->
 

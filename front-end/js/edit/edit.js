@@ -1,3 +1,23 @@
+function fillCategory(selectedLocal){  
+   $.ajax({
+              type: "GET",
+              url: CONSTANTS.API_BASE_URL + "category",
+              data: JSON.stringify({}),
+              success: function(msg) {
+                console.log(msg)
+                jQuery.each(msg, function(index, categories) { 
+                console.log(categories)  
+                console.log(selectedLocal[categories._id["$oid"]])               
+                  $("#categories").append("<option value=" + categories._id["$oid"] + " " + selectedLocal[categories._id["$oid"]] + ">" + categories.name + "</option>")
+                }); //foreach
+              }, //sucess
+              error: function(jqXHR, textStatus, errorThrown) {
+                printError(jqXHR, textStatus, errorThrown)
+              }
+            }); //ajax
+}
+
+
 
 $(document).ready(function() {
   var usernameSession = localStorage.getItem("usernameSession");
@@ -30,20 +50,7 @@ $(document).ready(function() {
             $("#title").val(msg[0]["title"]);
             $("#description").val(msg[0]["description"]);
             $("#projectId").val(msg[0]["_id"]["$oid"]);
-            selected[msg[0]["category"]] = "selected"
-            $.ajax({
-              type: "GET",
-              url: CONSTANTS.API_BASE_URL + "category",
-              data: JSON.stringify({}),
-              success: function(msg) {
-                jQuery.each(msg, function(index, categories) {                  
-                  $("#categories").append("<option value=" + categories._id["$oid"] + " " + selected[categories._id["$oid"]] + ">" + categories.name + "</option>")
-                }); //foreach
-              }, //sucess
-              error: function(jqXHR, textStatus, errorThrown) {
-                printError(jqXHR, textStatus, errorThrown)
-              }
-            }); //ajax
+            selected[msg[0]["category"]] = "selected";                       
             //document.getElementById(msg[0]["category"]).setAttribute("selected","selected")
             var count = 0;
             msg[0]["fragments"].forEach(function(frag) {              
@@ -69,6 +76,8 @@ $(document).ready(function() {
           }
         });
       } //IF 
+      console.log(selected)
+      fillCategory(selected)
   });
 });
 
