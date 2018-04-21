@@ -65,7 +65,7 @@ $(document).ready(function() {
                 musicPath = path;
                 console.log("Adding URL to music");
                 audio = new Audio("../"+musicPath);
-                audio.volume = 0.3;
+                audio.volume = 0.2;
            };
           })(path, name));
           $("#list-of-music").append($li);
@@ -104,7 +104,7 @@ $(document).ready(function() {
         console.log("Play music");
         audio.pause();
         audio.currentTime = 0;
-        audio.volume = 0.3;
+        audio.volume = 0.2;
         audio.play();
         console.log(audio.duration);
         var fadePoint = videoDuration-4;

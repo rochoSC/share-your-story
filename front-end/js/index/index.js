@@ -1,4 +1,4 @@
-function fillPage(msg) {  
+function fillPage(msg) {
   jQuery.each(msg, function(index1, categories) {
     var $contenido = $("<div>").attr("id","subWrapper");
     var $idControl = "#content".concat(index1)
@@ -19,6 +19,8 @@ function fillPage(msg) {
         var $video = $("<div>").addClass("col-xs-3");
         var $link = $("<a>").attr("href", "#?videoId=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target", "#VideoWatch").attr("data-toggle", "modal").data("src", categories[v]["url"]);
         $link.data("title", categories[v]["title"]).data("description", categories[v]["description"])
+        $link.data("backgroundMusicUrl", categories[v]["backgroundMusicUrl"])
+        $link.data("effect", categories[v]["effect"])
         var $thumbnail = $("<img>").attr("src", categories[v]["thumbnailUrl"]); //add thumbnailroute
         console.log(categories[v]["thumbnailUrl"])
         $link.append($thumbnail);
@@ -43,12 +45,97 @@ function fillPage(msg) {
   }); //every category first for
 }
 
+function onLoadVideo(audio, effectType){
 
+  $('#VideoWatch').on('hidden.bs.modal', function () {
+    console.log("Closing the modal");
+    stopVideo();
+    setStyle(false);
+  });
+
+  $('#VideoWatch').on('shown.bs.modal', function () {
+    console.log("Closing the modal");
+    playVideo();
+  });
+
+  function setStyle(val){
+    if(val){
+      for (var i = 0; i < CONSTANTS.AVAILABLE_EFFECTS.length; i++) {
+        if(CONSTANTS.AVAILABLE_EFFECTS[i].name == effectType){
+          document.querySelector("#final-video").style = CONSTANTS.AVAILABLE_EFFECTS[i].value;
+          document.querySelector("#final-video").style.webkitFilter = CONSTANTS.AVAILABLE_EFFECTS[i].value;
+          document.querySelector("#final-video").style.mozFilter = CONSTANTS.AVAILABLE_EFFECTS[i].value;
+          document.querySelector("#final-video").style.filter = CONSTANTS.AVAILABLE_EFFECTS[i].value;
+
+          document.querySelector("#final-video").style.width = "100%";
+        }
+      }
+    }else{
+        document.querySelector("#final-video").style = undefined;
+        document.querySelector("#final-video").style.webkitFilter = undefined;
+        document.querySelector("#final-video").style.mozFilter = undefined;
+        document.querySelector("#final-video").style.filter = undefined;
+        document.querySelector("#final-video").style.width = "100%";
+    }
+  }
+
+  if(effectType){
+    setStyle(true);
+  }
+
+  // Video controls
+  var videoDuration;
+  var fadeAudio;
+
+  function stopAudio(){
+    console.log("Stop music");
+    audio.pause()
+    audio.currentTime = 0;
+    if(fadeAudio){
+      clearInterval(fadeAudio);
+    }
+  }
+
+  function playAudio(){
+    console.log("Play music");
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = 0.2;
+    audio.play();
+    var fadePoint = videoDuration-4;
+    fadeAudio = setInterval(function () {
+      var step = 0.02;
+      if ((audio.currentTime >= fadePoint) && ((audio.volume - step) >= 0.0)) {
+        audio.volume -= step;
+      }
+      // When volume at zero stop all the intervalling
+      if ((audio.volume - step) <= 0.0) {
+        stopAudio();
+      }
+    }, 200);
+  }
+
+  function stopVideo(){
+    document.querySelector('#final-video').pause();
+    document.querySelector('#final-video').currentTime = 0;
+    if(audio){
+      stopAudio();
+    }
+  }
+
+  function playVideo(){
+    videoDuration = document.querySelector('#final-video').duration;
+    console.log(videoDuration);
+    document.querySelector('#final-video').play();
+    if(audio){
+      playAudio();
+    }
+  }
+
+
+}
 
 $(document).ready(function() {
-
-
-
 
   var usernameSession = localStorage.getItem("usernameSession");
 
@@ -72,7 +159,7 @@ $(document).ready(function() {
       //contentType: "application/json",
       url: CONSTANTS.API_BASE_URL + "videos",
       //dataType: 'json',
-      success: function(msg) {        
+      success: function(msg) {
         fillPage(msg)
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -187,18 +274,35 @@ $(document).ready(function() {
   });
 
   $(document).on("click", ".thumbnail", function () {
+    //TODO: Add stop video when dismiss
      var myVideoURL = $(this).data('src');
      if (!myVideoURL.includes("embed")){
-       pos =myVideoURL.lastIndexOf("/")
-       myVideoURL = myVideoURL
+       pos =myVideoURL.lastIndexOf("/");
      }
      $(".modal-body #final-video").attr( "src", myVideoURL);
-     $("#videoTitle").text($(this).data('title'))
-     $("#titleDescription").text($(this).data('description'))
+     $("#videoTitle").text($(this).data('title'));
+     $("#titleDescription").text($(this).data('description'));
 
+     var effectType;
+     var audio;
+     console.log($(this));
+     console.log("Music?");
+     console.log($(this).data('backgroundMusicUrl'));
+     if($(this).data('backgroundMusicUrl')){
+       audio = new Audio("../"+$(this).data('backgroundMusicUrl'));
+     }
+
+     if($(this).data('effect')){
+       effectType = $(this).data('effect');
+     }
+     onLoadVideo(audio, effectType);
      // As pointed out in comments,
      // it is superfluous to have to manually call the modal.
      // $('#addBookDialog').modal('show');
-});
+   });
+
+
+
+
 
 });
