@@ -18,7 +18,7 @@ def fillCategories():
 
 
 class VideoList(Resource):
-    def get2(self):        
+    def get2(self):
         res = to_json(mongo.db.videos.find({"published":True}).sort([("category",1)]))
         listVideos = {}
         for video in res:
@@ -27,15 +27,15 @@ class VideoList(Resource):
             listVideos[video["category"]].append(video)
         return listVideos
 
-    def get(self):        
+    def get(self):
         cats = to_json(mongo.db.categories.find())
-        listVideos={}           
+        listVideos={}
         for cat in cats:
-            cur = mongo.db.videos.find({"published":True,"category":cat["_id"]["$oid"]})            
-            if(cur.count()>0):            
+            cur = mongo.db.videos.find({"published":True,"category":cat["_id"]["$oid"]})
+            if(cur.count()>0):
                 listVideos[cat["name"]] = [x for x in to_json(cur)]
-        return listVideos            
-        
+        return listVideos
+
         #res = to_json(mongo.db.videos.find({"published":True}).sort([("category",1)]))
         # listVideos = {}
         # for video in res:
@@ -141,7 +141,10 @@ class VideoUpload(Resource):
             if video is not None:
                 mongo.db.videos.update({"_id":ObjectId(video_id)},{ "$pull": { "fragments": { "fragmentId": int(fragment_id) } } });
                 res = mongo.db.videos.update_one({"_id":ObjectId(video_id)},{ "$push": { "fragments": {
-                    "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailUrl":thumbnail_path.replace('\\', '/')
+                    "$each": [{
+                        "fragmentId": int(fragment_id), "videoUrl": video_path.replace('\\', '/'), "thumbnailUrl":thumbnail_path.replace('\\', '/')
+                    }],
+                    "$sort": {"fragmentId":1}
                 } } });
                 return {"message": "The file has been uploaded"}, 201
             else:
@@ -207,14 +210,13 @@ class VideoProject(Resource):
 
 class Project(Resource):
     def get(self, project_id):
-        return to_json(mongo.db.videos.find({"_id":ObjectId(project_id)}))        
+        return to_json(mongo.db.videos.find({"_id":ObjectId(project_id)}))
     # def get(self):
     #     print "Hola Mundo"
     #     #fillCategories()
 
 class DestroyProject(Resource):
     def post(self):
-        project = parse_body(request.data) 
+        project = parse_body(request.data)
         print project
         mongo.db.videos.remove({"_id": ObjectId(project["id"])})
-
