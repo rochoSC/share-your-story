@@ -1,13 +1,13 @@
-function fillCategory(selectedLocal){  
+function fillCategory(selectedLocal){
    $.ajax({
               type: "GET",
               url: CONSTANTS.API_BASE_URL + "category",
               data: JSON.stringify({}),
               success: function(msg) {
                 console.log(msg)
-                jQuery.each(msg, function(index, categories) { 
-                console.log(categories)  
-                console.log(selectedLocal[categories._id["$oid"]])               
+                jQuery.each(msg, function(index, categories) {
+                console.log(categories)
+                console.log(selectedLocal[categories._id["$oid"]])
                   $("#categories").append("<option value=" + categories._id["$oid"] + " " + selectedLocal[categories._id["$oid"]] + ">" + categories.name + "</option>")
                 }); //foreach
               }, //sucess
@@ -50,13 +50,13 @@ $(document).ready(function() {
             $("#title").val(msg[0]["title"]);
             $("#description").val(msg[0]["description"]);
             $("#projectId").val(msg[0]["_id"]["$oid"]);
-            selected[msg[0]["category"]] = "selected";                       
+            selected[msg[0]["category"]] = "selected";
             //document.getElementById(msg[0]["category"]).setAttribute("selected","selected")
             var count = 0;
-            msg[0]["fragments"].forEach(function(frag) {              
+            msg[0]["fragments"].forEach(function(frag) {
               document.getElementById("thumbnail" + frag["fragmentId"]).setAttribute("src", "../" + frag["thumbnailUrl"])
               count += 1
-            });            
+            });
             if (count == CONSTANTS.NUMBER_OF_FRAGMENTS) {
               document.getElementById("publishButton").setAttribute("href", "../publish?videoId=" + msg[0]["_id"]["$oid"])
             }
@@ -68,22 +68,25 @@ $(document).ready(function() {
             document.getElementById("fragmento4").setAttribute("href", "../record?videoId=" + msg[0]["_id"]["$oid"] + "&fragmentId=4");
             document.getElementById("fragmento5").setAttribute("href", "../record?videoId=" + msg[0]["_id"]["$oid"] + "&fragmentId=5");
             document.getElementById("createButton").innerHTML = "Save"
-
-
+            console.log(selected)
+            fillCategory(selected)
           },
           error: function(jqXHR, textStatus, errorThrown) {
             printError(jqXHR, textStatus, errorThrown)
           }
         });
-      } //IF 
-      console.log(selected)
-      fillCategory(selected)
+      }else{
+        localStorage.removeItem("tags")
+        console.log(selected)
+        fillCategory(selected)
+      } //IF
+
   });
 });
 
 
 //Create Project
-$("#createButton").click(function() {  
+$("#createButton").click(function() {
   $.ajax({
     type: "POST",
     contentType: "application/json",

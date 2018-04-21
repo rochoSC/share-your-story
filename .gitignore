@@ -1,3 +1,4 @@
 *.pyc
 *.webm
 back-end/uploads/thumbnails/*/*.png
+back-end/videosToConcat.txt
