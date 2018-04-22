@@ -21,7 +21,6 @@ function fillCategory(selectedLocal){
 
 $(document).ready(function() {
   var usernameSession = localStorage.getItem("usernameSession");
-
   if (usernameSession) {
     $("#usernameSession").show();
     $("#goToDashboard").show();
@@ -58,6 +57,7 @@ $(document).ready(function() {
               count += 1
             });
             if (count == CONSTANTS.NUMBER_OF_FRAGMENTS) {
+              document.getElementById("publishToModal").setAttribute("disabled",false)
               document.getElementById("publishButton").setAttribute("href", "../publish?videoId=" + msg[0]["_id"]["$oid"])
             }
             localStorage.removeItem("tags")
@@ -145,6 +145,10 @@ $("#deleteButton").click(function() {
     } //confirm
   } //if
 }); //onclick
+
+
+
+
 
 
 //Submit loggin info

@@ -24,7 +24,7 @@ def fillCategories():
 
 
 class CategoryList(Resource):
-    def post(self):
+    def post(self):        
         category = parse_body(request.data)
         try:
             res = mongo.db.categories.insert(category)
