@@ -19,7 +19,10 @@ function fillCategory(selectedLocal){
 
 
 
+
+
 $(document).ready(function() {
+  //localStorage.removeItem("tags")
   var usernameSession = localStorage.getItem("usernameSession");
   if (usernameSession) {
     $("#usernameSession").show();
@@ -56,8 +59,10 @@ $(document).ready(function() {
               document.getElementById("thumbnail" + frag["fragmentId"]).setAttribute("src", "../" + frag["thumbnailUrl"])
               count += 1
             });
+            console.log(count)
             if (count == CONSTANTS.NUMBER_OF_FRAGMENTS) {
-              document.getElementById("publishToModal").setAttribute("disabled",false)
+              console.log(count)
+              document.getElementById("publishToModal").removeAttribute("disabled")
               document.getElementById("publishButton").setAttribute("href", "../publish?videoId=" + msg[0]["_id"]["$oid"])
             }
             localStorage.removeItem("tags")

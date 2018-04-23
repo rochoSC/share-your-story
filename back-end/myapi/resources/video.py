@@ -87,17 +87,18 @@ class Music(Resource):
 
 class VideoSearch(Resource):
     def get(self):
-
         search = request.args.get("keys")
         print search
         term = ".*"+search+".*" ##cuidar con mas palabras
         print term
         res = to_json(mongo.db.videos.find({"published":True , "title": {"$regex": term}}).sort([("category",1)]))
-        listVideos = {}
+        listVideos = {}                 
         for video in res:
-            if not(video["category"] in listVideos):
-                listVideos[video["category"]]=[]
-            listVideos[video["category"]].append(video)
+            cat = to_json(mongo.db.categories.find({"_id":ObjectId(video["category"])}))            
+            categoryName = cat[0]["name"]
+            if not(categoryName in listVideos):
+                listVideos[categoryName]=[]
+            listVideos[categoryName].append(video)
         print "Algo",listVideos
         return listVideos
 
@@ -201,6 +202,7 @@ class VideoProject(Resource):
         else:
             #todo update
             id = project.pop("id")
+            projec.pop("fragments")
             res = mongo.db.videos.update({"_id":ObjectId(id)},project)
             res = mongo.db.videos.find({"_id":ObjectId(id)})
             res = id

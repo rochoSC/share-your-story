@@ -1,3 +1,5 @@
+    $(document).ready(function(){
+
     [].forEach.call(document.getElementsByClassName('tags-input'), function(el) {
         let hiddenInput = document.createElement('input'),
             mainInput = document.createElement('input'),
@@ -33,7 +35,7 @@
         el.appendChild(hiddenInput);          
         
         if (localStorage.getItem("tags")) {
-            tags = localStorage.getItem("tags").split(",")
+            tags = localStorage.getItem("tags").split(",")            
             tags.forEach(function(t){
                 if(t.length>0){
                     addTag(t);
@@ -84,3 +86,4 @@
             return tag.replace(/[^\w -]/g, '').trim().replace(/\W+/g, '-');
         }
     });
+});

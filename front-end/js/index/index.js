@@ -18,6 +18,7 @@ function fillPage(msg) {
       for (i = 0; i < 4 && i < categories.length; i++) {
         var $video = $("<div>").addClass("col-xs-3");
         var $link = $("<a>").attr("href", "#?videoId=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target", "#VideoWatch").attr("data-toggle", "modal").data("src", categories[v]["url"]);
+
         $link.data("title", categories[v]["title"]).data("description", categories[v]["description"])
         $link.data("backgroundMusicUrl", categories[v]["backgroundMusicUrl"])
         $link.data("effect", categories[v]["effect"])
@@ -25,6 +26,7 @@ function fillPage(msg) {
         console.log(categories[v]["thumbnailUrl"])
         $link.append($thumbnail);
         $video.append($link);
+        $video.append("<p.title>"+categories[v]["title"]+"</p>")
         $row.append($video);
         v++;
       } //termina el for que va hasta el 4
@@ -173,8 +175,11 @@ $(document).ready(function() {
 
   $("#searchButton").click(function() {
     console.log("On Click");
+    console.log($("#searchText").val());
+    document.getElementById("paginaIndex").removeChild(document.getElementById("wrapper"))
+    wrapper = $("<div>").attr("id","wrapper");
+    $("#paginaIndex").append(wrapper)
     $("#subWrapper").remove();
-    //$("#subWrapper").remove();
     $.ajax({
       type: "GET",
       //contentType: "application/json",
@@ -184,7 +189,7 @@ $(document).ready(function() {
       }),
       //dataType: 'json',
       success: function(msg) {
-
+        console.log(msg)
         fillPage(msg)
       },
       error: function(jqXHR, textStatus, errorThrown) {
