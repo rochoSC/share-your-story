@@ -5,64 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fragment recording</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="images/favicon.ico" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-    <!-- <link rel="stylesheet" type="text/css" href="css/main.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="../images/favicon.ico" />
 
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Zorkivate</a>
-        </div>  
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-         <!--  <form class="navbar-form navbar-left"  id="searchForm">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default" id="searchButton" >Go!</button>
-          </form> -->
+    <!-- Session information -->
 
-          <ul class="nav navbar-nav navbar-right">
-            <li id="shareStory"> <a href="#" data-toggle="modal" data-target="#loginModal" >Share a Story
-            </a></li>
-            <li class="active" id="goToDashboard"><a href="../dashboard">Dashboard <span class="sr-only">(current)</span></a></li>
-            <li class="dropdown" id="logOutDropDown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Session <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="modal" data-target="#confirmLogOut">Log Out</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>  <!-- Session information -->
-</header>
-    <section>
+
     <div class="container-fluid">
-      <!-- <div class="row">
-        <div style="margin:20px"  id="usernameSession">
-            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
-        </div>
-      </div> -->
       <div class="row">
-          <div class="col-lg-6 border" id="recommendations-holder">            
-              <!-- <video autoplay id="video_preview"></video> -->
+          <div class="col-6 border collapse" id="recommendations-holder">
           </div>
-          <div class="col-lg-6" id="video-container">
+          <div class="col-6 collapse" id="video-container">
               <div class="row">
                 <video autoplay muted id="video_recording" style="width:100%;"></video>
                 <img class="collapse" id="video_recording_gif" src="images/recording.gif" width="70" height="20">
@@ -75,14 +31,14 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-4" >
-                  <button id="rec_button">REC</button>
+                <div class="col-4" >
+                  <button type="button" id="rec_button" class="btn btn-outline-danger btn-lg" style="width:100%; margin:2px">REC</button>
                 </div>
-                <div class="col-lg-4">
-                  <button id="stop_button">STOP</button>
+                <div class="col-4">
+                  <button type="button" class="btn btn-outline-dark btn-lg" id="stop_button" style="width:100%; margin:2px">STOP</button>
                 </div>
-                <div class="col-lg-4">
-                  <button id="play_button">PLAY</button>
+                <div class="col-4">
+                  <button  id="play_button" type="button" class="btn btn-outline-success btn-lg" style="width:100%; margin:2px">PLAY</button>
                 </div>
               </div>
           </div>
@@ -90,11 +46,11 @@
       <br>
       <div class="row">
         <div class="col-12 text-center">
-          <button type="button" class="btn btn-primary" id="submit_fragment_button">Submit</button>
+          <button type="button" class="btn btn-outline-dark btn-lg" id="submit_fragment_button" style="width:30%; margin:2px">Submit</button>
         </div>
       </div>
     </div>
-  </section>
+
     <!-- This has to always bee added to any html; Start -->
 
     <!-- Log out confirmation modal -->
@@ -127,6 +83,5 @@
 
     <!-- Local JS -->
     <script src="js/main.js"></script>
-    <script type="text/javascript" src=""></script>
 </body>
 </html>

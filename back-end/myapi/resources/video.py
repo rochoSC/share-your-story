@@ -92,9 +92,9 @@ class VideoSearch(Resource):
         term = ".*"+search+".*" ##cuidar con mas palabras
         print term
         res = to_json(mongo.db.videos.find({"published":True , "title": {"$regex": term}}).sort([("category",1)]))
-        listVideos = {}                 
+        listVideos = {}
         for video in res:
-            cat = to_json(mongo.db.categories.find({"_id":ObjectId(video["category"])}))            
+            cat = to_json(mongo.db.categories.find({"_id":ObjectId(video["category"])}))
             categoryName = cat[0]["name"]
             if not(categoryName in listVideos):
                 listVideos[categoryName]=[]
@@ -202,8 +202,8 @@ class VideoProject(Resource):
         else:
             #todo update
             id = project.pop("id")
-            projec.pop("fragments")
-            res = mongo.db.videos.update({"_id":ObjectId(id)},project)
+            project.pop("fragments")
+            res = mongo.db.videos.update({"_id":ObjectId(id)},{"$set":project})
             res = mongo.db.videos.find({"_id":ObjectId(id)})
             res = id
         # res = mongo.db.videos.find({"user_id":project["user_id"], "title":project["title"]})

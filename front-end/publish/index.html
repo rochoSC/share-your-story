@@ -12,44 +12,49 @@
 </head>
 
 <body>
-  <!-- Session information -->
-  <div style="margin:20px"  id="usernameSession">
-    <a href="#" class="btn btn-default" data-toggle="modal" data-target="#confirmLogOut">Session</a>
-  </div>
 
   <!-- Your code goes here -->
   <div class="container-fluid text-center border">
     <div>
-      <h1 id="video-title">s</h1>
+      <h1 id="video-title"></h1>
       <video autoplay id="final-video" style="width:40%;" preload="metadata"></video>
     </div>
     <div class="col-12">
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-2 text-right"><button type="button" class="btn btn-primary" id="btn-play" style="width:30%">Play</button></div>
-        <div class="col-2 text-left"><button type="button" class="btn btn-primary" id="btn-stop" style="width:30%">Stop</button></div>
+        <div class="col-2 text-right">
+          <!-- <button type="button" class="btn btn-primary" id="btn-play" style="width:30%">Play</button> -->
+          <button  id="btn-play" type="button" class="btn btn-outline-success btn-lg" style="width:100%; margin:2px">PLAY</button>
+        </div>
+        <div class="col-2 text-left">
+          <button type="button" class="btn btn-outline-dark btn-lg" id="btn-stop" style="width:100%; margin:2px">STOP</button>
+        </div>
         <div class="col-4"></div>
       </div>
     </div>
+    <br><br>
     <div class="col-12">
       <div class="row">
         <div class="col-6">
           <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-3 text-left"><button data-toggle="modal" data-target="#music" id="btn-music" type="button" class="btn btn-primary" style="width:100%">Choose music</button></div>
+            <div class="col-md-3 text-left">
+              <button data-toggle="modal" data-target="#music" id="btn-music" type="button" class="btn btn-outline-secondary btn-lg" style="width:100%">Choose music</button>
+
+            </div>
             <div class="col-md-6 text-left"><p id="music-name">None</p></div>
           </div>
           <br>
           <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-3 text-left"><button  data-toggle="modal" data-target="#effects" id="btn-effect" type="button" class="btn btn-primary" style="width:100%">Choose effect</button></div>
+            <div class="col-md-3 text-left"><button  data-toggle="modal" data-target="#effects" id="btn-effect" type="button" class="btn btn-outline-secondary btn-lg" style="width:100%">Choose effect</button></div>
             <div class="col-md-6 text-left"><p id="effect-name">None</p></div>
           </div>
           <br>
           <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-3 text-left"><label class="btn btn-primary" style="width:100%">
-              Upload thumbnail <input type="file"  id="btn-thumbnail" hidden accept="image/x-png,image/gif,image/jpeg"></label></div>
+            <div class="col-md-3 text-left"><label class="btn btn-outline-secondary btn-lg" style="width:100%">
+              Thumbnail <input type="file"  id="btn-thumbnail" hidden accept="image/x-png,image/gif,image/jpeg"></label></div>
             <div class="col-md-6 text-left"><p id="thumbnail-name">None</p></div>
           </div>
           <br>
@@ -58,7 +63,11 @@
           <br>
           <div class="row">
             <div class="col-4"></div>
-            <div class="col-4"><button  id="btn-share" type="button" class="btn btn-primary" style="width:100%">Share</button></div>
+            <div class="col-4">
+              <!-- <button  id="btn-share" type="button" class="btn btn-primary" style="width:100%">Share</button> -->
+              <button type="button" class="btn btn-outline-primary btn-lg" id="btn-share" style="width:60%; margin:2px">Submit</button>
+
+            </div>
             <div class="col-4"></div>
           </div>
         </div>

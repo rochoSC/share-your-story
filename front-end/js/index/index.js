@@ -1,7 +1,8 @@
 function fillPage(msg) {
   jQuery.each(msg, function(index1, categories) {
     var $contenido = $("<div>").attr("id","subWrapper");
-    var $idControl = "#content".concat(index1)
+    var $idControl = "content".concat(index1)
+    var $LinkIdControl = "#content".concat(index1)
     //console.log($idControl)
     var $category = $("<div>") //creating the slide for category
     var $categoryTitle = $("<div class='title text-left h1'>".concat(index1).concat("</div>"));
@@ -9,33 +10,43 @@ function fillPage(msg) {
     var $myCarrusel = $("<div>").attr("id", $idControl).addClass("carousel slide");
     var $innercarousel = $("<div>").addClass("carousel-inner");
     var $classItem = "item active";
+    var v = 0;
     for (v = 0; v < categories.length;) {
+      console.log(index1);
+      console.log(v)
       var $item = $("<div>").addClass($classItem);
-      var $classItem = "item";
+      $classItem = "item";
       //hay un for aqui que es modulo 4
       var $row = $("<div>").addClass("row");
       //hay un for que va hasta el 4
-      for (i = 0; i < 4 && i < categories.length; i++) {
+      for (var i = 0; (i < 4 && v < categories.length); i++) {
         var $video = $("<div>").addClass("col-xs-3");
+        console.log('otro AQUI!!!!!!!');
+        console.log(index1);
+        console.log(v)
         var $link = $("<a>").attr("href", "#?videoId=".concat(categories[v]["id"])).addClass("thumbnail").attr("data-target", "#VideoWatch").attr("data-toggle", "modal").data("src", categories[v]["url"]);
 
         $link.data("title", categories[v]["title"]).data("description", categories[v]["description"])
         $link.data("backgroundMusicUrl", categories[v]["backgroundMusicUrl"])
         $link.data("effect", categories[v]["effect"])
-        var $thumbnail = $("<img>").attr("src", categories[v]["thumbnailUrl"]); //add thumbnailroute
+        var $thumbnail = $("<img>").attr("src", categories[v]["thumbnailUrl"]).attr("style", "height:50%; width:100%"); //add thumbnailroute
         console.log(categories[v]["thumbnailUrl"])
         $link.append($thumbnail);
         $video.append($link);
         $video.append("<p.title>"+categories[v]["title"]+"</p>")
         $row.append($video);
         v++;
+        console.log('despues de incrementar');
+        console.log(v)
       } //termina el for que va hasta el 4
+
       //termina el for
+      $innercarousel.append($item);
       $item.append($row)
     }
-    var $leftControl = $("<a>").addClass("left carousel-control").attr("href", $idControl).attr("data-slide", "prev").text("‹")
-    var $rightControl = $("<a>").addClass("right carousel-control").attr("href", $idControl).attr("data-slide", "next").text("›")
-    $innercarousel.append($item);
+    var $leftControl = $("<a>").addClass("left carousel-control").attr("href", $LinkIdControl).attr("data-slide", "prev").text("‹")
+    var $rightControl = $("<a>").addClass("right carousel-control").attr("href", $LinkIdControl).attr("data-slide", "next").text("›")
+
     $myCarrusel.append($innercarousel);
     $myCarrusel.append($leftControl);
     $myCarrusel.append($rightControl);

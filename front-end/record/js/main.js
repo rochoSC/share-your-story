@@ -1,16 +1,5 @@
 $(document).ready(function() {
-  var usernameSession = localStorage.getItem("usernameSession");
 
-  if (usernameSession) {
-    $("#logOutDropDown").show();
-    $("#goToDashboard").show();
-    $("#shareStory").hide();
-  }
-  else {
-    $("#logOutDropDown").hide();
-    $("#goToDashboard").hide();
-    $("#shareStory").show();
-  }
   var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),

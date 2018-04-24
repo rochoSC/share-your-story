@@ -16,7 +16,99 @@ function fillCategory(selectedLocal){
               }
             }); //ajax
 }
+var hiddenInput;
+var mainInput;
+var tags;
 
+function setTags(){
+  [].forEach.call(document.getElementsByClassName('tags-input'), function(el) {
+      hiddenInput = document.createElement('input');
+      mainInput = document.createElement('input');
+      tags = [];
+
+      console.log("Creating tags")
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', el.getAttribute('data-name'));
+      hiddenInput.setAttribute('id', el.getAttribute('data-name'));
+
+
+      mainInput.setAttribute('type', 'text');
+      mainInput.classList.add('main-input');
+      mainInput.addEventListener('input', function() {
+          let enteredTags = mainInput.value.split(',');
+          if (enteredTags.length > 1) {
+              enteredTags.forEach(function(t) {
+                  let filteredTag = filterTag(t);
+                  if (filteredTag.length > 0)
+                      addTag(filteredTag);
+              });
+              mainInput.value = '';
+          }
+      });
+
+      mainInput.addEventListener('keydown', function(e) {
+          let keyCode = e.which || e.keyCode;
+          if (keyCode === 8 && mainInput.value.length === 0 && tags.length > 0) {
+              removeTag(tags.length - 1);
+          }
+      });
+
+      el.appendChild(mainInput);
+      el.appendChild(hiddenInput);
+
+      // if (localStorage.getItem("tags")) {
+      //     tags = localStorage.getItem("tags").split(",")
+      //     tags.forEach(function(t){
+      //         if(t.length>0){
+      //             addTag(t);
+      //         }
+      //     });
+      //     localStorage.removeItem("tags");
+      // }
+
+      function addTag(text) {
+          let tag = {
+              text: text,
+              element: document.createElement('span'),
+          };
+
+          tag.element.classList.add('tag');
+          tag.element.textContent = tag.text;
+
+          let closeBtn = document.createElement('span');
+          closeBtn.classList.add('close');
+          closeBtn.addEventListener('click', function() {
+              removeTag(tags.indexOf(tag));
+          });
+          tag.element.appendChild(closeBtn);
+
+          tags.push(tag);
+
+          el.insertBefore(tag.element, mainInput);
+
+          refreshTags();
+      }
+
+      function removeTag(index) {
+          let tag = tags[index];
+          tags.splice(index, 1);
+          el.removeChild(tag.element);
+          refreshTags();
+      }
+
+      function refreshTags() {
+          let tagsList = [];
+          tags.forEach(function(t) {
+              tagsList.push(t.text);
+          });
+          hiddenInput.value = tagsList.join(',');
+      }
+
+      function filterTag(tag) {
+          return tag.replace(/[^\w -]/g, '').trim().replace(/\W+/g, '-');
+      }
+  });
+}
 
 
 
@@ -37,6 +129,7 @@ $(document).ready(function() {
   //This file must be added on every js that uses ajax calls to our API server
   var selected = {};
   $.getScript("/js/constants.js", function() {
+    setTags();
     console.log("Constants file loaded")
       var projectId = getUrlParameter("id")
       if (projectId) {
@@ -65,8 +158,61 @@ $(document).ready(function() {
               document.getElementById("publishToModal").removeAttribute("disabled")
               document.getElementById("publishButton").setAttribute("href", "../publish?videoId=" + msg[0]["_id"]["$oid"])
             }
-            localStorage.removeItem("tags")
-            localStorage.setItem("tags",msg[0]["tags"])
+            // localStorage.removeItem("tags")
+            // localStorage.setItem("tags",msg[0]["tags"])
+            var el = document.querySelector('#tags');
+            var tagsText = msg[0]["tags"].split(",");
+
+            // tags = localStorage.getItem("tags").split(",")
+            tagsText.forEach(function(t){
+                if(t.length>0){
+                    addTag(t);
+                }
+            });
+
+            // el.appendChild(mainInput);
+            // el.appendChild(hiddenInput);
+
+            function addTag(text) {
+                let tag = {
+                    text: text,
+                    element: document.createElement('span'),
+                };
+
+                tag.element.classList.add('tag');
+                tag.element.textContent = tag.text;
+
+                let closeBtn = document.createElement('span');
+                closeBtn.classList.add('close');
+                closeBtn.addEventListener('click', function() {
+                    removeTag(tags.indexOf(tag));
+                });
+                tag.element.appendChild(closeBtn);
+
+                tags.push(tag);
+
+                el.insertBefore(tag.element, mainInput);
+
+                refreshTags();
+            }
+
+            function removeTag(index) {
+                let tag = tags[index];
+                tags.splice(index, 1);
+                el.removeChild(tag.element);
+                refreshTags();
+            }
+
+            function refreshTags() {
+                let tagsList = [];
+                tags.forEach(function(t) {
+                    tagsList.push(t.text);
+                });
+                hiddenInput.value = tagsList.join(',');
+            }
+
+
+
             document.getElementById("fragmento1").setAttribute("href", "../record?videoId=" + msg[0]["_id"]["$oid"] + "&fragmentId=1");
             document.getElementById("fragmento2").setAttribute("href", "../record?videoId=" + msg[0]["_id"]["$oid"] + "&fragmentId=2");
             document.getElementById("fragmento3").setAttribute("href", "../record?videoId=" + msg[0]["_id"]["$oid"] + "&fragmentId=3");
@@ -81,7 +227,7 @@ $(document).ready(function() {
           }
         });
       }else{
-        localStorage.removeItem("tags")
+        // localStorage.removeItem("tags")
         console.log(selected)
         fillCategory(selected)
       } //IF
@@ -126,6 +272,9 @@ $("#createButton").click(function() {
 });
 
 
+$("#dashboardBtn").click(function(){
+  window.location = "/dashboard";
+});
 
 $("#deleteButton").click(function() {
   if ($("#projectId").val()) {

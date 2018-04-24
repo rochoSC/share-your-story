@@ -8,57 +8,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="css/tags.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <link rel="shortcut icon" href="images/favicon.ico" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
-    <link rel="shortcut icon" href="../images/favicon.ico" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/tags.css">
     <link rel="stylesheet" type="text/css" href="css/nav.css">
 
 </head>
 
 <body>
-  <!-- Session information -->  
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Zorkivate</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <!-- <form class="navbar-form navbar-left"  id="searchForm">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default" id="searchButton" >Go!</button>
-          </form>
- -->
-          <ul class="nav navbar-nav navbar-right">
-            <li id="shareStory"> <a href="#" data-toggle="modal" data-target="#loginModal" >Share a Story
-            </a></li>
-            <li class="active" id="goToDashboard"><a href="../dashboard">Dashboard <span class="sr-only">(current)</span></a></li>
-            <li class="dropdown" id="logOutDropDown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Session <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="modal" data-target="#confirmLogOut">Log Out</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>  
+  <!-- Session information -->
   <!-- Your code goes here -->
   <div class="container">
-   <div class="row">    
+   <div class="row">
     <form id="projectForm" method="post" data-toggle="validator">
       <input type="hidden" id="projectId" />
       <div class="row" name="formularioClasico">
@@ -93,8 +58,8 @@
               <div class="row">
                 <div class="col">
                   <a id="fragmento1" class="img-fluid">
-                    <img id="thumbnail1" src="http://placehold.it/250x250" width="50%">
-                    <p>Fragment 1</p>
+                    <img id="thumbnail1" src="http://localhost/uploads/defaultFragment.png" width="100%" height="350px">
+                    <p>Introduction</p>
                   </a>
                 </div>
               </div>
@@ -106,8 +71,8 @@
               <div class="row">
                 <div class="col">
                   <a id="fragmento2" class="img-fluid">
-                    <img id="thumbnail2" src="http://placehold.it/250x250" width="50%">
-                    <p>Fragment 2</p>
+                    <img id="thumbnail2" src="http://localhost/uploads/defaultFragment.png" width="100%" height="350px">
+                    <p>Talk about the situation you overcame</p>
                   </a>
                 </div>
               </div>
@@ -119,8 +84,8 @@
               <div class="row">
                 <div class="col">
                   <a id="fragmento3" class="img-fluid">
-                    <img id="thumbnail3" src="http://placehold.it/250x250" width="50%">
-                    <p>Fragment 3</p>
+                    <img id="thumbnail3" src="http://localhost/uploads/defaultFragment.png" width="100%" height="350px">
+                    <p>How did you overcome?</p>
                   </a>
                 </div>
               </div>
@@ -132,8 +97,8 @@
               <div class="row">
                 <div class="col">
                   <a id="fragmento4" class="img-fluid">
-                    <img id="thumbnail4" src="http://placehold.it/250x250" width="50%">
-                    <p>Fragment 4</p>
+                    <img id="thumbnail4" src="http://localhost/uploads/defaultFragment.png" width="100%" height="350px">
+                    <p>Conclusions</p>
                   </a>
                 </div>
               </div>
@@ -145,23 +110,24 @@
               <div class="row">
                 <div class="col">
                   <a id="fragmento5" class="img-fluid">
-                    <img id="thumbnail5" src="http://placehold.it/250x250" width="50%">
-                    <p>Fragment 5</p>
+                    <img id="thumbnail5" src="http://localhost/uploads/defaultFragment.png" width="100%" height="350px">
+                    <p>Climax</p>
                   </a>
                 </div>
               </div>
             </div>
           </div>
 
-        </div>        
+        </div>
       </form>
     </div>
   </div>
-</div> 
+</div>
 <nav class="floating-menu">
-  <button href="#" id="deleteButton" class="btn btn-outline-dark btn-lg">Delete</button>
-  <button href="#" class="btn btn-outline-success btn-lg" id="createButton">Create</button>
-  <button  id="publishToModal" href="#" class="btn btn-outline-danger btn-lg" data-toggle="modal" data-target="#publishModal" disabled=true >Publish</button>  
+  <button href="#" id="deleteButton" class="btn btn-outline-dark btn-lg" style="width:100%; margin:2px">Delete</button>
+  <button href="#" class="btn btn-outline-success btn-lg" id="createButton" style="width:100%; margin:2px">Create</button>
+  <button  id="publishToModal" href="#" class="btn btn-outline-danger btn-lg" data-toggle="modal" data-target="#publishModal" disabled=true style="width:100%; margin:2px">Publish</button>
+  <button href="#" id="dashboardBtn" class="btn btn-outline-dark btn-lg" style="width:100%; margin:2px">Dashboard</button>
 </nav>
 
   <!-- This has to always bee added to any html; Start -->
@@ -226,6 +192,6 @@
   <!-- Local JS -->
   <script src="js/tags.js"></script>
   <script src="js/edit.js"></script>
-  
+
 </body>
 </html>
